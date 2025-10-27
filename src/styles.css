@@ -14,11 +14,11 @@ body {
 
 /* Variáveis CSS */
 :root {
-  --primary: #22c55e;
-  --primary-dark: #16a34a;
-  --primary-light: #4ade80;
-  --secondary: #f1f5f9;
-  --accent: #e2e8f0;
+  --primary: #32493a;
+  --primary-dark: #283a2e;
+  --primary-light: #3c5646;
+  --secondary: #e9be5e;
+  --accent: #7e4b29;
   --text: #1e293b;
   --text-muted: #64748b;
   --border: #e2e8f0;
@@ -51,7 +51,7 @@ body {
 
 /* Header */
 .gradient-bg {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(135deg, #32493a 0%, #7e4b29 100%);
   color: white;
 }
 
@@ -515,6 +515,23 @@ body {
 
 .space-y-3 > * + * {
   margin-top: 0.75rem;
+}
+
+/* Header logo helpers */
+.header-logo-wrapper {
+  padding: 0.5rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-logo {
+  width: 72px;
+  height: 72px;
+  display: block;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
 .space-y-4 > * + * {

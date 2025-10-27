@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Utensils } from "lucide-react";
 import { toast } from "sonner";
 
 import { ProductCarousel } from "./components/ProductCarousel";
@@ -91,16 +90,16 @@ import { potatoProducts, pastaProducts } from "./data/products";
         <div className="container">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
-              <div style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.1)', borderRadius: '50%' }}>
-                <Utensils style={{ width: '2rem', height: '2rem', color: 'white' }} />
+                <div className="header-logo-wrapper">
+                  <img src="/logobatata.png" alt="Delícias da Casa logo" className="header-logo" />
+                </div>
+                <div>
+                  <h1 className="text-4xl font-bold" style={{ color: 'white' }}>Delícias da Casa</h1>
+                  <p style={{ color: 'rgba(255,255,255,0.95)', fontSize: '1.125rem' }}>
+                    Batatas recheadas e massas artesanais com entrega via WhatsApp
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-4xl font-bold text-gradient" style={{ color: 'white' }}>Delícias da Casa</h1>
-                <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.125rem' }}>
-                  Batatas recheadas e massas artesanais com entrega via WhatsApp
-                </p>
-              </div>
-            </div>
             <ThemeToggle />
           </div>
         </div>
