@@ -91,7 +91,7 @@ import { potatoProducts, pastaProducts } from "./data/products";
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
                 <div className="header-logo-wrapper">
-                  <img src="/logobatata.png" alt="Delícias da Casa logo" className="header-logo" />
+                  <img src="/logobatata.png" alt="Delícias da Casa logo" className="header-logo header-logo-large" />
                 </div>
                 <div>
                   <h1 className="text-4xl font-bold" style={{ color: 'white' }}>Delícias da Casa</h1>
