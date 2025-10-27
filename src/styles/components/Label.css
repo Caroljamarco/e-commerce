@@ -1,0 +1,48 @@
+/* Label Base */
+.label {
+  display: inline-block;
+  color: var(--color-text);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  transition: color 200ms ease;
+}
+
+/* Required */
+.label-required::after {
+  content: "*";
+  color: var(--color-error);
+  margin-left: var(--spacing-1);
+}
+
+/* Sizes */
+.label-sm {
+  font-size: var(--font-xs);
+}
+
+.label-lg {
+  font-size: var(--font-base);
+}
+
+/* States */
+.label-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.label-error {
+  color: var(--color-error);
+}
+
+/* With Icon */
+.label-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.label-icon {
+  width: 1em;
+  height: 1em;
+  color: currentColor;
+}

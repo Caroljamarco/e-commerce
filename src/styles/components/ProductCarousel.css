@@ -1,0 +1,112 @@
+/* Product Carousel Container */
+.carousel-section {
+  width: 100%;
+  margin-bottom: var(--spacing-8);
+}
+
+.carousel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-4);
+  padding: 0 var(--spacing-4);
+}
+
+.carousel-title {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* Carousel Scroll Container */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  padding: var(--spacing-4);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Hide scrollbar but keep functionality */
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Prevent layout shift during scroll */
+.carousel-track::after {
+  content: '';
+  padding-right: var(--spacing-4);
+}
+
+/* Navigation Buttons */
+.carousel-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 200ms ease;
+  z-index: 2;
+  opacity: 0.8;
+  box-shadow: var(--shadow-md);
+}
+
+.carousel-nav-button:hover {
+  opacity: 1;
+  background: var(--color-background);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-nav-prev {
+  left: var(--spacing-2);
+}
+
+.carousel-nav-next {
+  right: var(--spacing-2);
+}
+
+/* Gradient Fade Effect */
+.carousel-fade-left,
+.carousel-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.carousel-fade-left {
+  left: 0;
+  background: linear-gradient(to right, var(--color-background) 0%, transparent 100%);
+}
+
+.carousel-fade-right {
+  right: 0;
+  background: linear-gradient(to left, var(--color-background) 0%, transparent 100%);
+}
+
+/* Product Cards within Carousel */
+.carousel-track .product-card {
+  flex: 0 0 auto;
+  width: 280px; /* Fixed width for consistent layout */
+  margin: 0;
+}

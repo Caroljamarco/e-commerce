@@ -1,0 +1,143 @@
+/* Button Base */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: all 200ms ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Sizes */
+.button-sm {
+  height: 2rem;
+  padding: 0 var(--spacing-3);
+  font-size: var(--font-sm);
+  gap: var(--spacing-2);
+}
+
+.button-md {
+  height: 2.5rem;
+  padding: 0 var(--spacing-4);
+  font-size: var(--font-base);
+  gap: var(--spacing-2);
+}
+
+.button-lg {
+  height: 3rem;
+  padding: 0 var(--spacing-6);
+  font-size: var(--font-lg);
+  gap: var(--spacing-3);
+}
+
+/* Variants */
+.button-primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.button-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.button-outline {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.button-outline:hover:not(:disabled) {
+  background: var(--color-muted);
+  border-color: var(--color-border);
+}
+
+.button-ghost {
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+}
+
+.button-ghost:hover:not(:disabled) {
+  background: var(--color-muted);
+}
+
+/* States */
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button-loading {
+  position: relative;
+  cursor: wait;
+}
+
+.button-loading > * {
+  opacity: 0;
+}
+
+.button-loading::after {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-right-color: currentColor;
+  border-radius: 50%;
+  animation: button-spin 0.6s linear infinite;
+}
+
+@keyframes button-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Icon Only */
+.button-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+}
+
+.button-icon.button-sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.button-icon.button-lg {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Full Width */
+.button-full {
+  width: 100%;
+}
+
+/* Add to Cart Button */
+.button-add-to-cart {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  border-radius: 9999px; /* rounded-full */
+  background: #000;
+  color: white;
+  font-weight: 500;
+  padding: var(--spacing-2) var(--spacing-4);
+  transition: all 200ms ease;
+}
+
+.button-add-to-cart:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}

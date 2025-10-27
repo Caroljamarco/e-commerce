@@ -10,6 +10,7 @@ import {
 } from "../ui";
 import { Button, Input, Label, Textarea } from "../ui";
 import type { Product } from "../../types";
+import "../../styles/components/AddToCartModal.css";
 
 interface AddToCartModalProps {
   isOpen: boolean;
@@ -51,71 +52,76 @@ export function AddToCartModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[460px] max-h-[85vh] flex flex-col bg-background border-border overflow-hidden">
-        <DialogHeader className="p-2 sm:p-3 flex-shrink-0 border-b flex flex-col items-start gap-1">
-          <DialogTitle className="text-sm font-semibold text-foreground leading-tight">
+      <DialogContent className="modal-content">
+        <DialogHeader className="modal-header">
+          <DialogTitle className="modal-title">
             Adicionar ao Carrinho
           </DialogTitle>
-          <DialogDescription className="text-[11px] text-muted-foreground mt-0">
+          <DialogDescription className="modal-description">
             Personalize seu pedido antes de adicionar ao carrinho
           </DialogDescription>
         </DialogHeader>
         
-        <div className="px-4 sm:px-6 py-2 overflow-y-auto flex-1 space-y-3">
-          <div className="flex items-start gap-2.5 p-2 bg-white/90 dark:bg-slate-800/80 rounded-md border border-border shadow-sm">
-            <div className={isShrinking ? "w-8 h-8 sm:w-10 sm:h-10 rounded-md overflow-hidden flex-shrink-0 bg-muted/20 flex items-center justify-center transition-all duration-200" : "w-16 h-16 sm:w-20 sm:h-20 rounded-md overflow-hidden flex-shrink-0 bg-muted/20 flex items-center justify-center transition-all duration-200"}>
+        <div className="modal-body">
+          <div className="product-card">
+            <div 
+              className={`product-image-container ${isShrinking ? 'shrinking' : ''}`}
+              role="img"
+              aria-label={`Imagem de ${product.name}`}
+            >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-contain"
+                className="product-image"
                 loading="lazy"
               />
             </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-sm leading-tight truncate">{product.name}</h3>
-              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+            <div className="product-info">
+              <h3 className="product-name">{product.name}</h3>
+              <p className="product-description">
                 {product.description}
               </p>
-              <span className="text-sm font-semibold text-primary mt-0.5 block">
+              <span className="product-price">
                 R$ {product.price.toFixed(2)}
               </span>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="quantity" className="text-xs font-medium">
+          <div>
+            <Label htmlFor="quantity" className="quantity-label">
               Quantidade
             </Label>
-            <div className="flex items-center gap-2">
+            <div className="quantity-controls">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-7 h-7 p-0"
+                className="quantity-button"
               >
-                <Minus className="w-3 h-3" />
+                <Minus size={16} />
               </Button>
               <Input
                 id="quantity"
                 type="number"
                 value={quantity}
                 onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-16 text-center text-sm font-medium"
+                className="quantity-input"
                 min="1"
+                aria-label="Quantidade"
               />
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setQuantity(quantity + 1)}
-                className="w-7 h-7 p-0"
+                className="quantity-button"
               >
-                <Plus className="w-3 h-3" />
+                <Plus size={16} />
               </Button>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="comment" className="text-xs font-medium">
+          <div>
+            <Label htmlFor="comment" className="quantity-label">
               Observações (opcional)
             </Label>
             <Textarea
@@ -124,37 +130,41 @@ export function AddToCartModal({
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={2}
-              className="resize-none text-xs"
+              className="resize-none comment-textarea"
             />
           </div>
 
-          <div className="bg-muted/60 p-2.5 rounded-md">
-            <div className="flex justify-between items-baseline gap-2">
-              <span className="text-xs font-medium text-muted-foreground">Subtotal:</span>
-              <span className="text-base font-semibold text-primary whitespace-nowrap leading-none">
-                R$ {(product.price * quantity).toFixed(2)}
-              </span>
-            </div>
+          <div className="subtotal-card">
+            <span className="subtotal-label">Subtotal:</span>
+            <span className="subtotal-value">
+              R$ {(product.price * quantity).toFixed(2)}
+            </span>
           </div>
         </div>
 
-        <DialogFooter className="p-3 sm:p-4 border-t flex-shrink-0">
-          <div className="flex flex-col sm:flex-row gap-2 w-full">
+        <DialogFooter className="modal-footer">
+          <div className="footer-buttons">
             <Button 
               variant="outline" 
               onClick={handleClose} 
-              className="sm:flex-1"
-              size="sm"
+              className="button-cancel"
+              size="lg"
             >
               Cancelar
             </Button>
             <Button 
               onClick={handleAddToCart} 
-              className="sm:flex-[2]"
-              size="sm"
+              className="button-add"
+              size="lg"
               disabled={isShrinking}
             >
-              {isShrinking ? "Adicionando..." : "🛒 Adicionar ao Carrinho"}
+              {isShrinking ? 
+                "Adicionando..." : 
+                <>
+                  <span className="icon">🛒</span>
+                  Adicionar ao Carrinho
+                </>
+              }
             </Button>
           </div>
         </DialogFooter>

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { ReactNode } from "react";
+import "../../../styles/components/Dialog.css";
 
 interface DialogProps {
   open: boolean;
@@ -29,12 +30,12 @@ export function Dialog({ open, onOpenChange, children }: DialogProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="dialog-overlay">
       <div 
-        className="fixed inset-0 bg-background/80 backdrop-blur-sm transition-all duration-100 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+        className="dialog-backdrop"
         onClick={() => onOpenChange(false)}
       />
-      <div className="relative z-50 min-w-[320px] transition-all duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-bottom-[2%] data-[state=open]:slide-in-from-bottom-[2%]">
+      <div className="dialog-container">
         {children}
       </div>
     </div>
@@ -48,7 +49,7 @@ interface DialogContentProps {
 
 export function DialogContent({ children, className = "" }: DialogContentProps) {
   return (
-    <div className={`relative bg-background p-6 shadow-lg rounded-lg border border-border max-w-lg w-full mx-4 ${className}`}>
+    <div className={`dialog-content ${className}`}>
       {children}
     </div>
   );
@@ -61,7 +62,7 @@ interface DialogHeaderProps {
 
 export function DialogHeader({ children, className = "" }: DialogHeaderProps) {
   return (
-    <div className={`flex flex-col space-y-1.5 text-center sm:text-left mb-4 ${className}`}>
+    <div className={`dialog-header ${className}`}>
       {children}
     </div>
   );
@@ -74,7 +75,7 @@ interface DialogTitleProps {
 
 export function DialogTitle({ children, className = "" }: DialogTitleProps) {
   return (
-    <h2 className={`font-semibold leading-none tracking-tight ${className}`}>
+    <h2 className={`dialog-title ${className}`}>
       {children}
     </h2>
   );
@@ -87,7 +88,7 @@ interface DialogDescriptionProps {
 
 export function DialogDescription({ children, className = "" }: DialogDescriptionProps) {
   return (
-    <p className={`text-muted-foreground ${className}`}>
+    <p className={`dialog-description ${className}`}>
       {children}
     </p>
   );
