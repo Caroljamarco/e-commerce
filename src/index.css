@@ -1,16 +1,14 @@
-@import "tailwindcss";
-
-@custom-variant dark (&:is(.dark *));
+/* Tailwind removido — estilos em CSS puro */
 
 :root {
   --font-size: 16px;
-  --background: 0 0% 100%;
+  --background: 255 100% 100%; /* fallback HSL triplet usage in components uses hsl(var(--background)) */
   --foreground: 222.2 84% 4.9%;
 
-  --card: 0 0% 100%;
+  --card: 255 100% 100%;
   --card-foreground: 222.2 84% 4.9%;
 
-  --popover: 0 0% 100%;
+  --popover: 255 100% 100%;
   --popover-foreground: 222.2 84% 4.9%;
 
   --primary: 142 76% 36%;
@@ -65,78 +63,66 @@
   --ring: 142 76% 36%;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+/* Base */
+* { box-sizing: border-box; }
 
-  body {
-    @apply bg-background text-foreground font-sans antialiased min-h-screen;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+html, body { height: 100%; }
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
-@layer components {
-  .container {
-    @apply mx-auto px-4 sm:px-6 lg:px-8;
-  }
-  
-  .gradient-bg {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
-  }
-  
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
-  }
-  
-  .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200;
-  }
-  
-  .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors duration-200;
-  }
-  
-  .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.7));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+/* Components */
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  .animate-slide-up {
-    animation: slideUp 0.3s ease-out;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  @keyframes slideUp {
-    from { 
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to { 
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+.gradient-bg {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, color-mix(in srgb, hsl(var(--primary)) 80%, transparent) 100%);
 }
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); transform: translateY(-4px); }
+
+.btn-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn-primary:hover { opacity: 0.92; }
+
+.btn-secondary {
+  background: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn-secondary:hover { opacity: 0.9; }
+
+.text-gradient {
+  background: linear-gradient(135deg, hsl(var(--primary)), color-mix(in srgb, hsl(var(--primary)) 70%, transparent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Utilities */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+.animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

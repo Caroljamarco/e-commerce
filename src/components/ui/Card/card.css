@@ -1,0 +1,7 @@
+.card { background: hsl(var(--card)); color: hsl(var(--card-foreground)); border-radius: 0.75rem; border: 1px solid hsl(var(--border)); box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: box-shadow 0.2s ease; }
+.card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.card--header { padding: 1.5rem; padding-bottom: 1rem; }
+.card--content { padding: 1.5rem; padding-top: 0; }
+.card--title { font-size: 1.25rem; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.card--description { color: hsl(var(--muted-foreground)); font-size: 1rem; }
+.card--footer { display: flex; align-items: center; padding: 1.5rem; padding-top: 0; }

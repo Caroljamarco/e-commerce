@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import type { TextareaHTMLAttributes } from "react";
+import "./textarea.css";
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: boolean;
@@ -7,23 +8,8 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className = "", error, ...props }, ref) => {
-    const baseClasses = [
-      "flex min-h-[100px] w-full rounded-lg border border-input bg-background px-4 py-3",
-      "text-base ring-offset-background placeholder:text-muted-foreground",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      "disabled:cursor-not-allowed disabled:opacity-50",
-      "transition-colors duration-200",
-      error ? "border-destructive" : "",
-      className
-    ].join(" ");
-
-    return (
-      <textarea
-        className={baseClasses}
-        ref={ref}
-        {...props}
-      />
-    );
+    const classes = ["textarea", error ? "textarea--error" : "", className].filter(Boolean).join(" ");
+    return <textarea className={classes} ref={ref} {...props} />;
   }
 );
 
