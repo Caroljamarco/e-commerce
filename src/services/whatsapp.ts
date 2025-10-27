@@ -6,7 +6,7 @@ export function sendOrderToRestaurant(
   total: number
 ) {
   // Número do restaurante (substitua pelo número real)
-  const restaurantPhone = "5511999999999";
+  const restaurantPhone = "5516993343948";
   
   // Monta a mensagem do pedido
   const message = formatOrderMessage(cartItems, customerData, total);

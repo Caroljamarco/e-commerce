@@ -16,6 +16,13 @@ export interface CartItem {
 export interface CustomerData {
   name: string;
   phone: string;
-  address: string;
+  deliveryType: "delivery" | "pickup";
+  cep?: string;
+  street?: string;
+  number?: string;
+  complement?: string;
+  neighborhood?: string;
+  city?: string;
+  uf?: string;
   additionalComments: string;
 }
