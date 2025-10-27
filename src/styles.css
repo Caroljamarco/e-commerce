@@ -534,6 +534,16 @@ body {
   border-radius: 8px;
 }
 
+/* Larger logo size for header (user requested 200x200) with responsive fallback */
+.header-logo-large {
+  width: 200px;
+  height: 200px;
+}
+
+@media (max-width: 640px) {
+  .header-logo-large { width: 72px; height: 72px; }
+}
+
 .space-y-4 > * + * {
   margin-top: 1rem;
 }

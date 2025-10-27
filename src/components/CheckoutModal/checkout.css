@@ -1,5 +1,15 @@
 /* Styles for Checkout Modal */
-.checkout-content { animation: fadeIn 0.25s ease; max-width: 42rem; }
+.checkout-content {
+	animation: fadeIn 0.25s ease;
+	max-width: 42rem;
+	/* make modal vertically constrained and scrollable when content is large */
+	max-height: 80vh;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
 .checkout-form { display: block; }
 .space-y-6 > * + * { margin-top: 1.5rem; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
