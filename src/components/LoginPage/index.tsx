@@ -30,7 +30,7 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
     if (success) {
       setUsername("");
       setPassword("");
-      onClose();
+      // Não chama onClose() aqui - deixa o componente pai gerenciar a navegação
     } else {
       setError("Usuário ou senha incorretos!");
       setPassword("");

@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { toast } from "sonner";
 
 import { HomePage } from "./components/HomePage";
-import { AdminRoute } from "./components/AdminRoute";
+import { AdminLogin } from "./components/AdminLogin";
+import { AdminDashboard } from "./components/AdminDashboard";
 
 import type { Product } from "./types";
 import { potatoProducts as initialPotatoProducts, pastaProducts as initialPastaProducts } from "./data/products";
@@ -43,6 +44,7 @@ import { potatoProducts as initialPotatoProducts, pastaProducts as initialPastaP
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rota principal - Página dos clientes */}
         <Route 
           path="/" 
           element={
@@ -52,10 +54,18 @@ import { potatoProducts as initialPotatoProducts, pastaProducts as initialPastaP
             />
           } 
         />
+        
+        {/* Rota de login do administrador */}
         <Route 
           path="/admin" 
+          element={<AdminLogin />} 
+        />
+        
+        {/* Rota do dashboard do administrador (protegida) */}
+        <Route 
+          path="/admin/dashboard" 
           element={
-            <AdminRoute
+            <AdminDashboard
               products={products}
               onAddProduct={handleAddProduct}
               onEditProduct={handleEditProduct}
