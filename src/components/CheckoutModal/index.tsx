@@ -132,25 +132,47 @@ export function CheckoutModal({
 
           <div className="space-y-4">
             <div className="delivery-type-selector">
-              <Label className="label-small mb-2">Tipo de Entrega</Label>
+              <Label className="label-small mb-3">Como você quer receber seu pedido?</Label>
               <div className="delivery-options">
                 <button
                   type="button"
                   className={`delivery-option ${customerData.deliveryType === 'delivery' ? 'active' : ''}`}
                   onClick={() => setCustomerData({ ...customerData, deliveryType: 'delivery' })}
+                  style={{
+                    borderRadius: '999px',
+                    padding: '12px 24px',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    transition: 'all 0.2s ease',
+                    border: '2px solid transparent',
+                    background: customerData.deliveryType === 'delivery' 
+                      ? 'linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-foreground)))'
+                      : 'transparent'
+                  }}
                 >
-                  🚚 Delivery
+                  🚚 Entrega
                 </button>
                 <button
                   type="button"
                   className={`delivery-option ${customerData.deliveryType === 'pickup' ? 'active' : ''}`}
                   onClick={() => setCustomerData({ ...customerData, deliveryType: 'pickup' })}
+                  style={{
+                    borderRadius: '999px',
+                    padding: '12px 24px',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    transition: 'all 0.2s ease',
+                    border: '2px solid transparent',
+                    background: customerData.deliveryType === 'pickup'
+                      ? 'linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-foreground)))'
+                      : 'transparent'
+                  }}
                 >
-                  🏪 Retirar no Local
+                  🏪 Retirar
                 </button>
               </div>
               {customerData.deliveryType === 'pickup' && (
-                <p className="text-sm mt-2 text-muted-foreground">
+                <p className="text-sm mt-3 text-muted-foreground text-center" style={{ maxWidth: '80%', margin: '0 auto' }}>
                   ⏰ Seu pedido estará pronto para retirada em aproximadamente 40 minutos a 1 hora após a confirmação.
                 </p>
               )}
