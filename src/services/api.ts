@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:3000/api';
+// In production (Vercel), use the same domain via relative '/api'.
+// In development, you can set VITE_API_URL=http://localhost:3000/api
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 export interface Product {
   id: string;
