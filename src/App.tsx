@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -7,39 +7,76 @@ import { AdminLogin } from "./components/AdminLogin";
 import { AdminDashboard } from "./components/AdminDashboard";
 
 import type { Product } from "./types";
-import { potatoProducts as initialPotatoProducts, pastaProducts as initialPastaProducts } from "./data/products";
+import { productService } from "./services/api";
 
  export default function App() {
-  const [products, setProducts] = useState<Product[]>([
-    ...initialPotatoProducts,
-    ...initialPastaProducts,
-  ]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load products from API
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      const data = await productService.getAll();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error loading products:', error);
+      toast.error('Erro ao carregar produtos');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const potatoProducts = products.filter((p) => p.category === "potato");
   const pastaProducts = products.filter((p) => p.category === "pasta");
 
-  const handleAddProduct = (productData: Omit<Product, "id">) => {
-    const newProduct: Product = {
-      ...productData,
-      id: `${productData.category}-${Date.now()}`,
-    };
-    setProducts([...products, newProduct]);
-    toast.success("Produto adicionado com sucesso!");
+  const handleAddProduct = async (productData: Omit<Product, "id">) => {
+    try {
+      const newProduct = await productService.create(productData);
+      setProducts([...products, newProduct]);
+      toast.success("Produto adicionado com sucesso!");
+    } catch (error) {
+      console.error('Error adding product:', error);
+      toast.error('Erro ao adicionar produto');
+    }
   };
 
-  const handleEditProduct = (id: string, productData: Omit<Product, "id">) => {
-    setProducts(
-      products.map((p) =>
-        p.id === id ? { ...productData, id } : p
-      )
+  const handleEditProduct = async (id: string, productData: Omit<Product, "id">) => {
+    try {
+      const updatedProduct = await productService.update(id, productData);
+      setProducts(
+        products.map((p) =>
+          p.id === id ? updatedProduct : p
+        )
+      );
+      toast.success("Produto atualizado com sucesso!");
+    } catch (error) {
+      console.error('Error updating product:', error);
+      toast.error('Erro ao atualizar produto');
+    }
+  };
+
+  const handleDeleteProduct = async (id: string) => {
+    try {
+      await productService.delete(id);
+      setProducts(products.filter((p) => p.id !== id));
+      toast.success("Produto excluído com sucesso!");
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      toast.error('Erro ao excluir produto');
+    }
+  };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <p>Carregando produtos...</p>
+      </div>
     );
-    toast.success("Produto atualizado com sucesso!");
-  };
-
-  const handleDeleteProduct = (id: string) => {
-    setProducts(products.filter((p) => p.id !== id));
-    toast.success("Produto excluído com sucesso!");
-  };
+  }
 
   return (
     <BrowserRouter>

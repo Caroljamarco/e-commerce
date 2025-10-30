@@ -109,10 +109,6 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
             </Button>
           </DialogFooter>
         </form>
-
-        <div className="login-info">
-          <p>💡 <strong>Dica:</strong> Use as credenciais de administrador fornecidas</p>
-        </div>
       </DialogContent>
     </Dialog>
   );
