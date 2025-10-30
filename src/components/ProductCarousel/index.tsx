@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { ProductCard, type Product } from "../ProductCard";
-import { Button } from "../ui";
+import { ProductCard } from "../ProductCard";
+import type { Product } from "../../types";
 
 interface ProductCarouselProps {
   title: string;
@@ -49,7 +49,7 @@ export function ProductCarousel({ title, products, onAddToCart }: ProductCarouse
         className="flex gap-6 overflow-x-auto scrollbar-hide"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', paddingBottom: '1rem' }}
       >
-        {products.map((product, index) => (
+        {products.map((product) => (
           <div key={product.id}>
             <ProductCard
               product={product}

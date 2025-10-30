@@ -1,6 +1,4 @@
 import { ChevronDown, ChevronUp, Trash2 } from "lucide-react";
-
-import { Card, CardContent, CardHeader, CardTitle, Button } from "../ui";
 import type { CartItem } from "../../types";
 
 interface CartProps {
