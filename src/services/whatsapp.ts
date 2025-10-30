@@ -1,5 +1,9 @@
 import type { CartItem, CustomerData } from "../types";
 
+// Opcional: endereço da loja para retirada (edite se desejar exibir)
+const STORE_NAME = "Batata & Massas";
+const STORE_ADDRESS = "Rua Exemplo, 123 - Centro"; // ajuste ou deixe vazio se não quiser mostrar
+
 export function sendOrderToRestaurant(
   cartItems: CartItem[],
   customerData: CustomerData,
@@ -49,11 +53,13 @@ function formatOrderMessage(
     )
     .join("\n");
 
+  const deliveryBlock = buildDeliveryBlock(customerData);
+
   return `🛵 *NOVO PEDIDO*
 
 *Cliente:* ${customerData.name}
 *Telefone:* ${customerData.phone}
-*Endereço:* ${customerData.address}
+${deliveryBlock}
 
 *ITENS DO PEDIDO:*
 ${items}
@@ -76,10 +82,11 @@ function formatConfirmationMessage(
     )
     .join("\n");
 
+  const confirmationDeliveryText = buildCustomerConfirmationLine(customerData);
+
   return `✅ *Pedido Confirmado!*
 
-Olá ${customerData.name}, seu pedido foi recebido e será entregue em breve no endereço:
-${customerData.address}
+Olá ${customerData.name}, seu pedido foi recebido. ${confirmationDeliveryText}
 
 *ITENS DO PEDIDO:*
 ${items}
@@ -88,4 +95,37 @@ ${items}
 
 ${customerData.additionalComments ? `\n*Observações:* ${customerData.additionalComments}\n` : ""}
 Agradecemos a preferência! 🙏`;
+}
+
+// Monta bloco de entrega/retirada para a mensagem do restaurante
+function buildDeliveryBlock(customerData: CustomerData): string {
+  if (customerData.deliveryType === "pickup") {
+    const storeLine = STORE_ADDRESS ? `\n*Retirada:* ${STORE_NAME} - ${STORE_ADDRESS}` : `\n*Retirada:* ${STORE_NAME}`;
+    return `*Forma:* Retirada${storeLine}`;
+  }
+
+  // delivery
+  const address = buildAddress(customerData);
+  return `*Forma:* Entrega\n*Endereço:* ${address}`;
+}
+
+// Linha amigável para o cliente na confirmação
+function buildCustomerConfirmationLine(customerData: CustomerData): string {
+  if (customerData.deliveryType === "pickup") {
+    return `Assim que seu pedido estiver pronto, avisaremos no WhatsApp para retirada${STORE_ADDRESS ? ` em ${STORE_ADDRESS}` : ""}.`;
+  }
+  const address = buildAddress(customerData);
+  return `Será entregue em breve no endereço:\n${address}`;
+}
+
+// Monta endereço a partir dos campos disponíveis
+function buildAddress(customer: CustomerData): string {
+  const parts: string[] = [];
+  const line1 = [customer.street, customer.number].filter(Boolean).join(", ");
+  if (line1) parts.push(line1);
+  const line2 = [customer.neighborhood, customer.city, customer.uf].filter(Boolean).join(" - ");
+  if (line2) parts.push(line2);
+  if (customer.cep) parts.push(`CEP: ${customer.cep}`);
+  if (customer.complement) parts.push(`Compl.: ${customer.complement}`);
+  return parts.join("\n");
 }
