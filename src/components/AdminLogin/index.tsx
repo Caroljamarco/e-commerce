@@ -3,35 +3,43 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { LoginModal } from "../LoginPage";
-
-// Credenciais de administrador
-const ADMIN_CREDENTIALS = {
-  username: "admin",
-  password: "admin123"
-};
+import { authService } from "../../services/auth";
 
 export function AdminLogin() {
   const navigate = useNavigate();
 
   // Verificar se já está autenticado ao carregar o componente
   useEffect(() => {
-    const isAuthenticated = sessionStorage.getItem("adminAuth") === "true";
-    if (isAuthenticated) {
-      // Se já está autenticado, redireciona direto para o dashboard
-      navigate("/admin/dashboard");
-    }
-  }, [navigate]);
+    checkAuth();
+  }, []);
 
-  const handleLogin = (username: string, password: string): boolean => {
-    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-      // Salvar token de autenticação no sessionStorage
+  const checkAuth = async () => {
+    try {
+      const session = await authService.checkSession();
+      if (session.authenticated) {
+        // Se já está autenticado, redireciona direto para o dashboard
+        navigate("/admin/dashboard");
+      }
+    } catch (error) {
+      // Não autenticado, continua na página de login
+    }
+  };
+
+  const handleLogin = async (username: string, password: string): Promise<boolean> => {
+    try {
+      const response = await authService.login(username, password);
+      
+      // Salvar dados do usuário no sessionStorage
       sessionStorage.setItem("adminAuth", "true");
+      sessionStorage.setItem("user", JSON.stringify(response.user));
+      
       toast.success("Login realizado com sucesso!");
       navigate("/admin/dashboard");
       return true;
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Erro ao fazer login");
+      return false;
     }
-    toast.error("Usuário ou senha incorretos!");
-    return false;
   };
 
   const handleCloseLoginModal = () => {

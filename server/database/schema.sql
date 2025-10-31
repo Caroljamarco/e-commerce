@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS products (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Create index on category for faster queries
-CREATE INDEX idx_category ON products(category);
+-- Create index on category for faster queries (ignora se já existir)
+CREATE INDEX IF NOT EXISTS idx_category ON products(category);
 
 -- Insert root admin user (password: admin)
 -- Senha hash gerado com bcrypt para 'admin'

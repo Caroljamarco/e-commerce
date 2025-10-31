@@ -22,7 +22,7 @@ const requireAdmin = (req, res, next) => {
 // Listar todos os usuários (apenas admin)
 router.get('/', requireAuth, requireAdmin, async (req, res) => {
   try {
-    const [rows] = await pool.promise().query(
+    const [rows] = await pool.query(
       'SELECT id, username, name, role, active, created_at, updated_at FROM users ORDER BY created_at DESC'
     );
     res.json(rows);
@@ -36,7 +36,7 @@ router.get('/', requireAuth, requireAdmin, async (req, res) => {
 router.get('/:id', requireAuth, requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.promise().query(
+    const [rows] = await pool.query(
       'SELECT id, username, name, role, active, created_at, updated_at FROM users WHERE id = ?',
       [id]
     );
@@ -71,7 +71,7 @@ router.post('/', requireAuth, requireAdmin, async (req, res) => {
     }
 
     // Verificar se usuário já existe
-    const [existing] = await pool.promise().query(
+    const [existing] = await pool.query(
       'SELECT id FROM users WHERE username = ?',
       [username]
     );
@@ -84,7 +84,7 @@ router.post('/', requireAuth, requireAdmin, async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Inserir usuário
-    const [result] = await pool.promise().query(
+    const [result] = await pool.query(
       'INSERT INTO users (username, password, name, role, active) VALUES (?, ?, ?, ?, true)',
       [username, hashedPassword, name, role]
     );
@@ -112,7 +112,7 @@ router.put('/:id', requireAuth, requireAdmin, async (req, res) => {
     const { username, password, name, role, active } = req.body;
 
     // Verificar se usuário existe
-    const [existing] = await pool.promise().query(
+    const [existing] = await pool.query(
       'SELECT id FROM users WHERE id = ?',
       [id]
     );
@@ -157,7 +157,7 @@ router.put('/:id', requireAuth, requireAdmin, async (req, res) => {
 
     values.push(id);
 
-    await pool.promise().query(
+    await pool.query(
       `UPDATE users SET ${updates.join(', ')} WHERE id = ?`,
       values
     );
@@ -176,7 +176,7 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
     const { id } = req.params;
 
     // Impedir que o root seja deletado
-    const [user] = await pool.promise().query(
+    const [user] = await pool.query(
       'SELECT username FROM users WHERE id = ?',
       [id]
     );
@@ -194,7 +194,7 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
       return res.status(403).json({ error: 'Não é possível deletar seu próprio usuário' });
     }
 
-    await pool.promise().query('DELETE FROM users WHERE id = ?', [id]);
+    await pool.query('DELETE FROM users WHERE id = ?', [id]);
     res.json({ message: 'Usuário deletado com sucesso' });
 
   } catch (error) {

@@ -13,27 +13,36 @@ import "./login.css";
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onLogin: (username: string, password: string) => boolean;
+  onLogin: (username: string, password: string) => boolean | Promise<boolean>;
 }
 
 export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
-    const success = onLogin(username, password);
+    try {
+      const success = await onLogin(username, password);
     
-    if (success) {
-      setUsername("");
+      if (success) {
+        setUsername("");
+        setPassword("");
+        // Não chama onClose() aqui - deixa o componente pai gerenciar a navegação
+      } else {
+        setError("Usuário ou senha incorretos!");
+        setPassword("");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro ao fazer login");
       setPassword("");
-      // Não chama onClose() aqui - deixa o componente pai gerenciar a navegação
-    } else {
-      setError("Usuário ou senha incorretos!");
-      setPassword("");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,11 +110,11 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
           )}
 
           <DialogFooter className="login-actions">
-            <Button type="button" variant="outline" onClick={handleClose}>
+            <Button type="button" variant="outline" onClick={handleClose} disabled={isLoading}>
               Cancelar
             </Button>
-            <Button type="submit" className="login-btn">
-              Entrar
+            <Button type="submit" className="login-btn" disabled={isLoading}>
+              {isLoading ? "Entrando..." : "Entrar"}
             </Button>
           </DialogFooter>
         </form>

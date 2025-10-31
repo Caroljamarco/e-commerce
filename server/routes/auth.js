@@ -6,28 +6,40 @@ const pool = require('../db');
 // Login
 router.post('/login', async (req, res) => {
   try {
+    console.log('📥 Recebendo request de login...');
     const { username, password } = req.body;
+    console.log('Username:', username);
 
     if (!username || !password) {
+      console.log('❌ Usuário ou senha faltando');
       return res.status(400).json({ error: 'Usuário e senha são obrigatórios' });
     }
 
+    console.log('🔍 Buscando usuário no banco...');
     // Buscar usuário
-    const [rows] = await pool.promise().query(
+    const [rows] = await pool.query(
       'SELECT * FROM users WHERE username = ? AND active = true',
       [username]
     );
 
+    console.log('Usuários encontrados:', rows.length);
+
     if (rows.length === 0) {
+      console.log('❌ Usuário não encontrado');
       return res.status(401).json({ error: 'Credenciais inválidas' });
     }
 
     const user = rows[0];
+    console.log('✅ Usuário encontrado:', user.username);
+    console.log('Hash armazenado:', user.password);
 
     // Verificar senha
+    console.log('🔐 Verificando senha...');
     const validPassword = await bcrypt.compare(password, user.password);
+    console.log('Senha válida?', validPassword);
     
     if (!validPassword) {
+      console.log('❌ Senha incorreta');
       return res.status(401).json({ error: 'Credenciais inválidas' });
     }
 
@@ -36,17 +48,20 @@ router.post('/login', async (req, res) => {
     req.session.userId = user.id;
     req.session.username = user.username;
     req.session.role = user.role;
+    console.log('✅ Sessão criada');
 
     // Retornar dados do usuário (sem senha)
     const { password: _, ...userWithoutPassword } = user;
+    console.log('✅ Login bem-sucedido!');
     res.json({
       message: 'Login realizado com sucesso',
       user: userWithoutPassword
     });
 
   } catch (error) {
-    console.error('Erro no login:', error);
-    res.status(500).json({ error: 'Erro ao realizar login' });
+    console.error('❌ Erro no login:', error.message);
+    console.error('Stack:', error.stack);
+    res.status(500).json({ error: 'Erro ao realizar login', details: error.message });
   }
 });
 

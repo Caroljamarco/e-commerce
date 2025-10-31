@@ -1,6 +1,6 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
-// Create connection pool
+// Create connection pool com promises
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -19,15 +19,16 @@ const pool = mysql.createPool({
   keepAliveInitialDelay: 0
 });
 
-// Test connection
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('❌ Erro ao conectar ao banco:', err.message);
-  } else {
+// Test connection com async/await
+(async () => {
+  try {
+    const connection = await pool.getConnection();
     console.log('✅ Conectado ao MySQL local (XAMPP)!');
     connection.release();
+  } catch (err) {
+    console.error('❌ Erro ao conectar ao banco:', err.message);
   }
-});
+})();
 
 // Export promise-based pool
-module.exports = pool.promise();
+module.exports = pool;
