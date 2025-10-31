@@ -16,7 +16,7 @@
 }
 
 .admin-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, hsl(var(--primary)) 0%, #7e4b29 100%);
   -webkit-background-clip: text;
@@ -27,7 +27,7 @@
 
 .admin-subtitle {
   color: hsl(var(--muted-foreground));
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin: 0.25rem 0 0 0;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   margin: 0 0 1.5rem 0;
   color: hsl(var(--primary));

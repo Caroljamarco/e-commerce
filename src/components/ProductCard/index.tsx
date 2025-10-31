@@ -28,7 +28,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
             className="product-card-btn"
             size="sm"
           >
-            <Plus className="w-4 h-4" />
+            <Plus style={{ width: '1rem', height: '1rem' }} />
             Adicionar
           </Button>
         </div>

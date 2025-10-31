@@ -45,44 +45,46 @@ export function Cart({ items, onUpdateQuantity, onRemoveItem, onCheckout }: Cart
           <div className="cart-items">
             {items.map((item) => (
               <div key={item.product.id} className="cart-item">
-                <div className="cart-img-wrapper">
-                  <img
-                    src={item.product.image}
-                    alt={item.product.name}
-                    className="cart-img"
-                  />
-                </div>
-                <div className="cart-item-details">
-                  <h4 className="cart-item-title">{item.product.name}</h4>
-                  <p className="cart-item-price">
-                    R$ {item.product.price.toFixed(2)}
-                  </p>
-                  {item.comment && (
-                    <p className="cart-item-comment">
-                      <span className="font-medium">Obs:</span> {item.comment}
-                    </p>
-                  )}
-                  <div className="cart-actions">
-                    <button
-                      onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                      className="btn btn-outline cart-btn"
-                    >
-                      <ChevronDown className="cart-btn-icon" />
-                    </button>
-                    <span className="cart-qty">{item.quantity}</span>
-                    <button
-                      onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                      className="btn btn-outline cart-btn"
-                    >
-                      <ChevronUp className="cart-btn-icon" />
-                    </button>
-                    <button
-                      onClick={() => onRemoveItem(item.product.id)}
-                      className="btn btn-ghost text-destructive cart-btn"
-                    >
-                      <Trash2 className="cart-btn-icon" />
-                    </button>
+                <div className="cart-item-header">
+                  <div className="cart-img-wrapper">
+                    <img
+                      src={item.product.image}
+                      alt={item.product.name}
+                      className="cart-img"
+                    />
                   </div>
+                  <div className="cart-item-info">
+                    <h4 className="cart-item-title">{item.product.name}</h4>
+                    <p className="cart-item-price">
+                      R$ {item.product.price.toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+                {item.comment && (
+                  <p className="cart-item-comment">
+                    <span className="font-medium">Obs:</span> {item.comment}
+                  </p>
+                )}
+                <div className="cart-actions">
+                  <button
+                    onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
+                    className="btn btn-outline cart-btn"
+                  >
+                    <ChevronDown className="cart-btn-icon" />
+                  </button>
+                  <span className="cart-qty">{item.quantity}</span>
+                  <button
+                    onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
+                    className="btn btn-outline cart-btn"
+                  >
+                    <ChevronUp className="cart-btn-icon" />
+                  </button>
+                  <button
+                    onClick={() => onRemoveItem(item.product.id)}
+                    className="btn btn-ghost text-destructive cart-btn"
+                  >
+                    <Trash2 className="cart-btn-icon" />
+                  </button>
                 </div>
               </div>
             ))}

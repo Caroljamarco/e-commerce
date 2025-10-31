@@ -52,7 +52,7 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
             <div className="login-icon">
               <Lock size={32} />
             </div>
-            <h2 className="text-2xl font-bold text-gradient">Acesso Administrativo</h2>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }} className="text-gradient">Acesso Administrativo</h2>
           </div>
           <DialogDescription>
             Digite suas credenciais para acessar o painel de administração

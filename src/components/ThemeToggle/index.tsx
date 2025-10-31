@@ -40,14 +40,20 @@ export function ThemeToggle() {
       variant="outline"
       size="sm"
       onClick={toggleTheme}
-      className="w-12 h-12 p-0 hover:bg-primary hover:text-primary-foreground transition-all duration-200 rounded-full"
+      style={{
+        width: '3rem',
+        height: '3rem',
+        padding: 0,
+        borderRadius: '50%',
+        transition: 'all 0.2s ease'
+      }}
     >
       {isDarkMode ? (
-        <Moon className="h-5 w-5" />
+        <Moon style={{ width: '1.25rem', height: '1.25rem' }} />
       ) : (
-        <Sun className="h-5 w-5" />
+        <Sun style={{ width: '1.25rem', height: '1.25rem' }} />
       )}
-      <span className="sr-only">Toggle theme</span>
+      <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>Toggle theme</span>
     </Button>
   );
 }
