@@ -3,7 +3,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 async function setupDatabase() {
-  console.log('🔌 Conectando ao banco Aiven Cloud MySQL...');
+  console.log('🔌 Conectando ao MySQL local (XAMPP)...');
   console.log(`Host: ${process.env.DB_HOST}`);
   console.log(`Port: ${process.env.DB_PORT}`);
   console.log(`User: ${process.env.DB_USER}`);
@@ -16,9 +16,7 @@ async function setupDatabase() {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       port: parseInt(process.env.DB_PORT),
-      ssl: {
-        rejectUnauthorized: false
-      },
+      // Sem SSL para MySQL local (XAMPP)
       connectTimeout: 30000,
       multipleStatements: true
     });

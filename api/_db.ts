@@ -12,7 +12,7 @@ if (!pool) {
     waitForConnections: true,
     connectionLimit: 5,
     queueLimit: 0,
-    ssl: { rejectUnauthorized: false },
+    // Sem SSL para MySQL local (XAMPP)
   });
   (globalThis as any).mysqlPool = pool;
 }

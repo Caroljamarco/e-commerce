@@ -12,13 +12,17 @@ body {
   background-color: #f8fafc;
 }
 
-/* Variáveis CSS */
+/* Variáveis CSS - Paleta da Logo: #744425 (marrom), #c79256 (dourado), #32493a (verde) */
 :root {
   --primary: #32493a;
   --primary-dark: #283a2e;
   --primary-light: #3c5646;
-  --secondary: #e9be5e;
-  --accent: #7e4b29;
+  --secondary: #c79256;
+  --secondary-dark: #b87f3f;
+  --secondary-light: #d4a570;
+  --accent: #744425;
+  --accent-dark: #5f3820;
+  --accent-light: #8d5530;
   --text: #1e293b;
   --text-muted: #64748b;
   --border: #e2e8f0;
@@ -29,11 +33,15 @@ body {
 }
 
 .dark {
-  --primary: #22c55e;
-  --primary-dark: #16a34a;
-  --primary-light: #4ade80;
-  --secondary: #1e293b;
-  --accent: #334155;
+  --primary: #3c5646;
+  --primary-dark: #32493a;
+  --primary-light: #4a6455;
+  --secondary: #d4a570;
+  --secondary-dark: #c79256;
+  --secondary-light: #deb688;
+  --accent: #8d5530;
+  --accent-dark: #744425;
+  --accent-light: #a26640;
   --text: #f1f5f9;
   --text-muted: #94a3b8;
   --border: #334155;
@@ -51,7 +59,7 @@ body {
 
 /* Header */
 .gradient-bg {
-  background: linear-gradient(135deg, #32493a 0%, #7e4b29 100%);
+  background: linear-gradient(135deg, #32493a 0%, #744425 50%, #c79256 100%);
   color: white;
 }
 
@@ -132,7 +140,7 @@ body {
 .product-carousel-title {
   font-size: 1.5rem;
   font-weight: bold;
-  background: linear-gradient(90deg,#16a34a,#22d3ee);
+  background: linear-gradient(135deg, #32493a, #c79256, #744425);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -194,7 +202,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Botões */
+/* Botões - Paleta da Logo */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -216,16 +224,30 @@ body {
 
 .btn-primary:hover {
   background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(50, 73, 58, 0.2);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: #1e293b;
+}
+
+.btn-secondary:hover {
+  background: var(--secondary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(199, 146, 86, 0.3);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .btn-outline:hover {
-  background: var(--accent);
+  background: var(--primary);
+  color: white;
 }
 
 .btn-ghost {
@@ -234,7 +256,8 @@ body {
 }
 
 .btn-ghost:hover {
-  background: var(--accent);
+  background: rgba(199, 146, 86, 0.1);
+  color: var(--accent);
 }
 
 /* Inputs */
@@ -412,7 +435,7 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -823,10 +846,10 @@ body {
   font-weight: 500;
 }
 .cart-total {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+  background: linear-gradient(135deg, rgba(199, 146, 86, 0.15), rgba(116, 68, 37, 0.1));
   padding: 1.5rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(199, 146, 86, 0.3);
 }
 .cart-checkout-btn {
   padding: 0.75rem;
@@ -863,8 +886,9 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg,#16a34a,#22d3ee);
+  background: linear-gradient(135deg, #32493a, #c79256, #744425);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .cart-empty {
@@ -978,10 +1002,10 @@ body {
   padding: 0 0.25rem;
 }
 .cart-total {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+  background: linear-gradient(135deg, rgba(199, 146, 86, 0.15), rgba(116, 68, 37, 0.1));
   padding: 1.5rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(199, 146, 86, 0.3);
   margin-top: 1.5rem;
 }
 .cart-total-row {
@@ -992,20 +1016,28 @@ body {
   font-size: 1rem;
 }
 .cart-total-value {
-  color: #16a34a;
+  color: #744425;
   font-size: 1.25rem;
+  font-weight: 700;
 }
 .cart-checkout-btn {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
   font-weight: 600;
-  background: #16a34a;
+  background: linear-gradient(135deg, #32493a 0%, #744425 100%);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
   margin-top: 1rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cart-checkout-btn:hover {
+  background: linear-gradient(135deg, #283a2e 0%, #5f3820 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(50, 73, 58, 0.3);
 }
 
 /* ProductCard custom styles */
@@ -1054,7 +1086,7 @@ body {
   margin-top: auto;
 }
 .product-card-price {
-  color: #16a34a;
+  color: #744425;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -1065,8 +1097,15 @@ body {
   border-radius: 9999px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background: #16a34a;
+  background: linear-gradient(135deg, #32493a 0%, #744425 100%);
   color: #fff;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-card-btn:hover {
+  background: linear-gradient(135deg, #283a2e 0%, #5f3820 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(50, 73, 58, 0.3);
 }

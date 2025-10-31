@@ -24,7 +24,7 @@ pool.getConnection((err, connection) => {
   if (err) {
     console.error('❌ Erro ao conectar ao banco:', err.message);
   } else {
-    console.log('✅ Conectado ao Aiven Cloud MySQL!');
+    console.log('✅ Conectado ao MySQL local (XAMPP)!');
     connection.release();
   }
 });

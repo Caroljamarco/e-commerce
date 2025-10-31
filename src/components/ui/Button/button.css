@@ -10,15 +10,15 @@
 }
 .btn:disabled { pointer-events: none; opacity: 0.5; }
 
-/* Variants */
+/* Variants - Paleta da Logo */
 .btn--default { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.btn--default:hover { filter: brightness(.95); box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
+.btn--default:hover { filter: brightness(.95); box-shadow: 0 6px 12px rgba(50, 73, 58, 0.2); transform: translateY(-1px); }
 
-.btn--outline { border: 1px solid hsl(var(--border)); background: hsl(var(--card)); color: hsl(var(--foreground)); }
-.btn--outline:hover { background: hsl(var(--accent)); }
+.btn--outline { border: 2px solid hsl(var(--primary)); background: hsl(var(--card)); color: hsl(var(--primary)); }
+.btn--outline:hover { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
 
 .btn--ghost { background: transparent; }
-.btn--ghost:hover { background: hsl(var(--accent)); }
+.btn--ghost:hover { background: hsl(var(--secondary)); color: hsl(var(--foreground)); }
 
 .btn--destructive { background: hsl(var(--destructive)); color: hsl(var(--destructive-foreground)); }
 .btn--destructive:hover { filter: brightness(.95); }

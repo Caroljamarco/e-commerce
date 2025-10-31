@@ -17,31 +17,50 @@ server/
 
 ### 1. Configurar Variáveis de Ambiente
 
-Crie um arquivo `.env` na raiz do projeto (copie de `.env.example`):
+Crie um arquivo `.env` na raiz do projeto:
 ```env
+# MySQL Local - XAMPP
 DB_HOST=localhost
 DB_USER=root
-DB_PASSWORD=sua_senha
-DB_NAME=nome_do_banco
+DB_PASSWORD=
+DB_NAME=ecommerce_batata
 DB_PORT=3306
 PORT=3000
 ```
 
-### 2. Criar Banco de Dados Local
+**Nota:** O XAMPP usa MySQL sem senha por padrão (`DB_PASSWORD=` vazio).
 
+### 2. Criar Banco de Dados no XAMPP
+
+**Passo 1: Iniciar o XAMPP**
+- Abra o XAMPP Control Panel
+- Inicie o módulo **MySQL** (clique em "Start")
+- Inicie o módulo **Apache** se quiser usar o phpMyAdmin
+
+**Passo 2: Criar banco via phpMyAdmin (Opção 1)**
+1. Acesse `http://localhost/phpmyadmin`
+2. Clique em "Novo" ou "New" no menu lateral
+3. Nome do banco: `ecommerce_batata`
+4. Collation: `utf8mb4_general_ci`
+5. Clique em "Criar"
+6. Vá na aba "SQL" e cole o conteúdo de `server/database/schema.sql`
+7. Execute
+8. Cole o conteúdo de `server/database/seeds.sql`
+9. Execute
+
+**Passo 3: Criar banco via linha de comando (Opção 2)**
 ```bash
-# Conectar ao MySQL
-mysql -u root -p
+# Navegar até a pasta bin do MySQL no XAMPP
+cd C:\xampp\mysql\bin
 
-# Criar banco
-CREATE DATABASE nome_do_banco;
-USE nome_do_banco;
+# Conectar ao MySQL (sem senha)
+mysql -u root
 
-# Executar schema
-source server/database/schema.sql;
-
-# Inserir dados de exemplo
-source server/database/seeds.sql;
+# Criar e popular banco
+CREATE DATABASE ecommerce_batata;
+USE ecommerce_batata;
+source C:/Users/karol/OneDrive/Área de Trabalho/projeto 3 semestre/meu-projeto/server/database/schema.sql;
+source C:/Users/karol/OneDrive/Área de Trabalho/projeto 3 semestre/meu-projeto/server/database/seeds.sql;
 ```
 
 ### 3. Iniciar o Servidor

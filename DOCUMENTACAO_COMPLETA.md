@@ -1,56 +1,224 @@
-# 📚 Documentação Completa do Sistema E-Commerce
+# 📚 Documentação Técnica - Sistema E-Commerce
+## Projeto Acadêmico - Análise e Desenvolvimento de Sistemas
+
+---
 
 ## 📋 Índice
-1. [Visão Geral](#visão-geral)
-2. [Arquitetura do Sistema](#arquitetura-do-sistema)
-3. [Frontend](#frontend)
-4. [Backend](#backend)
-5. [Banco de Dados](#banco-de-dados)
-6. [Fluxos de Usuário](#fluxos-de-usuário)
-7. [Instalação e Configuração](#instalação-e-configuração)
-8. [Deploy](#deploy)
+1. [Visão Geral do Projeto](#visão-geral)
+2. [Conceitos Fundamentais](#conceitos-fundamentais)
+3. [Arquitetura do Sistema](#arquitetura-do-sistema)
+4. [Frontend (Interface do Usuário)](#frontend)
+5. [Backend (Servidor)](#backend)
+6. [Banco de Dados](#banco-de-dados)
+7. [Fluxos de Usuário](#fluxos-de-usuário)
+8. [Instalação e Configuração](#instalação-e-configuração)
+9. [Deploy (Publicação)](#deploy)
 
 ---
 
 ## 🎯 Visão Geral
 
-### Descrição do Projeto
-Sistema de e-commerce completo para venda de **Batatas Recheadas** e **Massas Artesanais** com integração ao WhatsApp para pedidos. O sistema possui área pública para clientes e área administrativa protegida para gerenciamento de produtos.
+### O que é este projeto?
+Este é um **sistema de e-commerce completo** desenvolvido para venda de **Batatas Recheadas** e **Massas Artesanais**. O diferencial é que os pedidos são enviados diretamente pelo **WhatsApp**, facilitando a comunicação entre cliente e estabelecimento.
 
-### Características Principais
-- ✅ Catálogo de produtos com categorias (Batatas e Massas)
-- ✅ Carrinho de compras interativo
-- ✅ Checkout com integração ao WhatsApp
-- ✅ Consulta de CEP via ViaCEP API
-- ✅ Painel administrativo protegido
-- ✅ CRUD completo de produtos
-- ✅ Tema claro/escuro
-- ✅ Design responsivo (mobile-first)
-- ✅ API REST para gerenciamento de dados
-- ✅ Banco de dados MySQL (Aiven Cloud)
+### Objetivos do Sistema
+- Permitir que clientes naveguem pelo catálogo de produtos
+- Adicionar produtos ao carrinho de compras
+- Finalizar pedidos com envio automático via WhatsApp
+- Gerenciar produtos através de um painel administrativo
 
-### Tecnologias Utilizadas
+### Público-Alvo
+- **Clientes:** Pessoas que desejam comprar os produtos
+- **Administradores:** Funcionários/donos que gerenciam o catálogo
 
-#### Frontend
-- **React 19.1.1** - Biblioteca UI
-- **TypeScript 5.8.3** - Linguagem tipada
-- **Vite 7.1.7** - Build tool e dev server
-- **React Router DOM 7.9.4** - Roteamento
-- **CSS Puro** - Estilização customizada com variáveis CSS
-- **Lucide React** - Ícones
-- **IMask 7.6.1** - Máscaras de input
-- **Sonner 2.0.7** - Notificações toast
+---
 
-#### Backend
-- **Node.js >= 18.18.0** - Runtime JavaScript
-- **Express 5.1.0** - Framework web
-- **MySQL2 3.15.3** - Driver MySQL
-- **CORS 2.8.5** - Cross-Origin Resource Sharing
-- **dotenv 17.2.3** - Variáveis de ambiente
+## 💡 Conceitos Fundamentais
 
-#### Banco de Dados
-- **MySQL 8.0+** - Sistema de gerenciamento de banco de dados relacional
-- **Aiven Cloud** - Hospedagem do banco de dados
+### O que é Frontend?
+É a **"parte da frente"** do sistema - tudo que o usuário vê e interage no navegador:
+- Páginas web
+- Botões e formulários
+- Design e cores
+- Animações
+
+**Analogia:** É como a vitrine de uma loja física.
+
+### O que é Backend?
+É a **"parte de trás"** do sistema - o servidor que processa as solicitações:
+- Regras de negócio
+- Processamento de dados
+- Comunicação com banco de dados
+- Segurança
+
+**Analogia:** É como o estoque e a administração de uma loja física.
+
+### O que é Banco de Dados?
+É onde os dados são **armazenados permanentemente**:
+- Produtos disponíveis
+- Informações de cada produto
+- Histórico
+
+**Analogia:** É como o arquivo/fichário de uma loja.
+
+### O que é API REST?
+É a **forma de comunicação** entre Frontend e Backend:
+- Frontend faz **requisições** (pedidos)
+- Backend responde com **dados**
+- Usa protocolo HTTP (mesmo da internet)
+
+**Analogia:** É como um garçom que leva pedidos do cliente para a cozinha.
+
+---
+
+## 🌟 Funcionalidades do Sistema
+
+### Para Clientes:
+- ✅ Ver catálogo de produtos organizados por categoria
+- ✅ Adicionar produtos ao carrinho com quantidade e observações
+- ✅ Visualizar resumo do pedido em tempo real
+- ✅ Preencher dados de entrega com busca automática de CEP
+- ✅ Escolher entre entrega ou retirada
+- ✅ Enviar pedido diretamente pelo WhatsApp
+- ✅ Alternar entre tema claro e escuro
+
+### Para Administradores:
+- ✅ Login protegido por senha
+- ✅ Adicionar novos produtos ao catálogo
+- ✅ Editar informações de produtos existentes
+- ✅ Excluir produtos do catálogo
+- ✅ Visualizar todos os produtos por categoria
+- ✅ Fazer logout com segurança
+
+### Recursos Técnicos:
+- ✅ Design responsivo (funciona em celular, tablet e computador)
+- ✅ Integração com API de CEP (ViaCEP)
+- ✅ Máscaras automáticas para telefone e CEP
+- ✅ Notificações visuais (toasts)
+- ✅ Validação de formulários
+
+---
+
+## 🛠️ Tecnologias Utilizadas (Stack)
+
+### Frontend (Lado do Cliente)
+
+#### React 19.1.1
+**O que é:** Biblioteca JavaScript para criar interfaces de usuário  
+**Por que usar:** Permite criar componentes reutilizáveis e atualizações eficientes na tela  
+**Analogia:** É como ter blocos de LEGO que você pode reutilizar em diferentes páginas
+
+#### TypeScript 5.8.3
+**O que é:** JavaScript com tipagem (define o tipo de cada variável)  
+**Por que usar:** Previne erros e facilita manutenção do código  
+**Exemplo:** Em vez de `let idade`, você escreve `let idade: number`
+
+#### Vite 7.1.7
+**O que é:** Ferramenta para desenvolvimento e build do projeto  
+**Por que usar:** Muito rápido e facilita o desenvolvimento  
+**Função:** Compila o código e cria servidor de desenvolvimento
+
+#### React Router DOM 7.9.4
+**O que é:** Biblioteca para navegação entre páginas  
+**Por que usar:** Cria Single Page Application (SPA) sem recarregar a página  
+**Função:** Gerencia rotas como `/`, `/admin`, `/admin/dashboard`
+
+#### CSS Puro
+**O que é:** Linguagem de estilização  
+**Por que usar:** Controle total sobre o design sem dependências  
+**Características:** Variáveis CSS, media queries responsivas
+
+#### Bibliotecas Auxiliares
+- **Lucide React:** Ícones modernos (carrinho, lixeira, etc.)
+- **IMask 7.6.1:** Máscaras automáticas (telefone, CEP)
+- **Sonner 2.0.7:** Notificações estilo "toast"
+
+---
+
+### Backend (Lado do Servidor)
+
+#### Node.js >= 18.18.0
+**O que é:** Ambiente para executar JavaScript no servidor  
+**Por que usar:** Permite usar JavaScript tanto no frontend quanto no backend  
+**Função:** Executa o código do servidor
+
+#### Express 5.1.0
+**O que é:** Framework web minimalista para Node.js  
+**Por que usar:** Facilita criação de APIs REST  
+**Função:** Gerencia rotas, requisições e respostas HTTP
+
+#### MySQL2 3.15.3
+**O que é:** Driver para conectar Node.js ao MySQL  
+**Por que usar:** Permite executar queries SQL do JavaScript  
+**Função:** Ponte entre aplicação e banco de dados
+
+#### CORS 2.8.5
+**O que é:** Middleware para Cross-Origin Resource Sharing  
+**Por que usar:** Permite que frontend e backend em domínios diferentes se comuniquem  
+**Função:** Configuração de segurança
+
+#### dotenv 17.2.3
+**O que é:** Carrega variáveis de ambiente de arquivo .env  
+**Por que usar:** Mantém dados sensíveis (senhas, URLs) fora do código  
+**Função:** Gerenciamento de configurações
+
+---
+
+### Banco de Dados
+
+#### MySQL 8.0+
+**O que é:** Sistema de Gerenciamento de Banco de Dados Relacional (SGBD)  
+**Por que usar:** Robusto, amplamente usado, suporta relações complexas  
+**Tipo:** SQL (Structured Query Language)  
+**Características:** 
+- Tabelas com linhas e colunas
+- Relacionamentos entre tabelas
+- Transações ACID
+
+#### Aiven Cloud
+**O que é:** Plataforma de hospedagem de bancos de dados  
+**Por que usar:** Banco na nuvem, não precisa instalar localmente em produção  
+**Vantagens:**
+- Alta disponibilidade
+- Backups automáticos
+- Acesso remoto seguro
+
+---
+
+## 📊 Padrões e Conceitos Aplicados
+
+### Padrão MVC (Model-View-Controller)
+**Separação de responsabilidades:**
+- **Model (Modelo):** Banco de dados MySQL
+- **View (Visão):** Componentes React
+- **Controller (Controlador):** Rotas Express
+
+### API RESTful
+**Princípios aplicados:**
+- Uso correto de métodos HTTP (GET, POST, PUT, DELETE)
+- URLs descritivas (`/api/products`, `/api/products/:id`)
+- Respostas em JSON
+- Stateless (sem estado entre requisições)
+
+### Componentização
+**React Components:**
+- Componentes pequenos e reutilizáveis
+- Props para passagem de dados
+- State para dados dinâmicos
+- Hooks para lógica (useState, useEffect)
+
+### Responsividade
+**Mobile First:**
+- Design pensado primeiro para mobile
+- Media queries para adaptar a telas maiores
+- Breakpoints: 640px, 768px, 1024px
+
+### Segurança
+**Medidas implementadas:**
+- Prepared Statements (prevenção SQL Injection)
+- Validação de dados no frontend e backend
+- Autenticação via sessionStorage
+- Variáveis de ambiente para dados sensíveis
 
 ---
 
@@ -117,157 +285,309 @@ meu-projeto/
 └── .env                        # Variáveis de ambiente (não commitado)
 ```
 
-### Fluxo de Dados
+### 🔄 Fluxo de Dados (Como a Informação Trafega)
+
+**Analogia:** É como fazer um pedido em um restaurante:
+
+1. **Cliente (Browser)** → Você olha o cardápio e faz o pedido
+2. **Frontend (React)** → Garçom que anota e leva até a cozinha  
+3. **Backend (Express)** → Cozinha que prepara o pedido
+4. **Banco de Dados (MySQL)** → Despensa com todos os ingredientes
 
 ```
-┌─────────────┐          ┌──────────────┐          ┌──────────────┐
-│   Cliente   │  HTTP    │   Frontend   │  HTTP    │   Backend    │
-│  (Browser)  │ ────────>│    React     │ ────────>│   Express    │
-└─────────────┘          └──────────────┘          └──────────────┘
-                                                            │
-                                                            │ SQL
-                                                            ▼
-                                                    ┌──────────────┐
-                                                    │    MySQL     │
-                                                    │  (Aiven)     │
-                                                    └──────────────┘
+┌─────────────────┐          ┌─────────────────┐          ┌─────────────────┐
+│    CLIENTE      │  HTTP    │    FRONTEND     │  HTTP    │    BACKEND      │
+│   (Browser)     │ ───────> │     React       │ ───────> │    Express      │
+│                 │ <─────── │   TypeScript    │ <─────── │     Node.js     │
+└─────────────────┘   JSON   └─────────────────┘   JSON   └─────────────────┘
+                                                                    │
+                                                                    │ SQL
+                                                                    ▼
+                                                            ┌─────────────────┐
+                                                            │  BANCO DE DADOS │
+                                                            │      MySQL      │
+                                                            │     (Aiven)     │
+                                                            └─────────────────┘
 ```
+
+**Exemplo prático - Adicionar produto ao carrinho:**
+
+1. Cliente clica em "Adicionar ao carrinho"
+2. Frontend captura o evento e atualiza estado local (useState)
+3. Carrinho lateral aparece com o produto
+4. Ao finalizar pedido, frontend envia requisição HTTP POST ao backend
+5. Backend valida dados e consulta/atualiza banco de dados
+6. Banco responde ao backend se operação foi bem-sucedida
+7. Backend retorna resposta ao frontend (sucesso/erro)
+8. Frontend exibe notificação ao cliente
 
 ---
 
-## 🎨 Frontend
+## 🎨 Frontend (Interface do Usuário)
 
-### Rotas da Aplicação
+> **O que é Frontend?** É tudo que o usuário vê e interage no navegador: botões, imagens, textos, formulários.
 
-| Rota | Componente | Descrição | Proteção |
-|------|------------|-----------|----------|
-| `/` | `HomePage` | Página principal para clientes | Pública |
-| `/admin` | `AdminLogin` | Login do administrador | Pública |
-| `/admin/dashboard` | `AdminDashboard` | Painel administrativo | Protegida |
+### 🛣️ Rotas da Aplicação (Páginas)
 
-### Componentes Principais
+**O que são rotas?** São os "endereços" das páginas dentro da aplicação (SPA - Single Page Application).
 
-#### 1. App.tsx
-**Responsabilidade:** Gerenciamento de estado global e roteamento
+| Rota | Componente | Para quem? | Descrição | Proteção |
+|------|------------|------------|-----------|----------|
+| `/` | `HomePage` | 👥 Clientes | Página inicial com catálogo de produtos | ✅ Pública |
+| `/admin` | `AdminLogin` | 👤 Admin | Tela de login administrativo | ✅ Pública |
+| `/admin/dashboard` | `AdminDashboard` | 👤 Admin | Painel de gerenciamento (CRUD produtos) | 🔒 Protegida |
 
-**Estado:**
-- `products: Product[]` - Lista de todos os produtos
-- `loading: boolean` - Estado de carregamento
+**Como funciona a proteção?**  
+- Rotas protegidas verificam se existe autenticação no `sessionStorage`
+- Se não autenticado, redireciona para `/admin`
+- Componente `AdminRoute` faz essa verificação
 
-**Principais Funções:**
+### 🧩 Componentes Principais (Blocos da Interface)
+
+**O que é um componente React?**  
+É um pedaço reutilizável da interface. Como peças de LEGO que você monta para criar a aplicação completa.
+
+---
+
+#### 📄 1. App.tsx (Componente Raiz)
+
+**O que faz:** É o "maestro" da aplicação - coordena tudo  
+**Responsabilidade:** Gerencia estado global e define rotas
+
+**Estado gerenciado:**
 ```typescript
-loadProducts() // Carrega produtos da API
-handleAddProduct(productData) // Adiciona novo produto
-handleEditProduct(id, productData) // Atualiza produto
-handleDeleteProduct(id) // Remove produto
+products: Product[]  // Lista de todos os produtos carregados
+loading: boolean     // Indica se está carregando dados
 ```
 
-#### 2. HomePage
-**Responsabilidade:** Interface principal para clientes
+**Funções importantes:**
+```typescript
+loadProducts()                      // Busca produtos da API
+handleAddProduct(productData)       // Adiciona novo produto
+handleEditProduct(id, productData)  // Atualiza produto existente
+handleDeleteProduct(id)             // Remove produto
+```
+
+**Como funciona:**
+1. Ao iniciar, chama `loadProducts()` para buscar produtos da API
+2. Passa `products` e funções como props para componentes filhos
+3. Define rotas com React Router (`/`, `/admin`, `/admin/dashboard`)
+
+---
+
+#### 🏠 2. HomePage (Página do Cliente)
+
+**O que faz:** Página inicial onde clientes veem e compram produtos  
+**Responsabilidade:** Catálogo de produtos + carrinho de compras
 
 **Recursos:**
-- Exibição de produtos em carrosséis por categoria
-- Carrinho de compras sticky
-- Modal para adicionar itens ao carrinho
-- Modal de checkout
-- Toggle de tema claro/escuro
+- 🎠 Carrosséis de produtos organizados por categoria
+- 🛒 Carrinho lateral fixo (sticky)
+- ➕ Modal para adicionar produto (quantidade, observação)
+- ✅ Modal de checkout (dados pessoais, endereço)
+- 🌙 Botão alternar tema (dark/light)
 
-**Estado Local:**
+**Estado gerenciado:**
 ```typescript
-cartItems: CartItem[] // Itens no carrinho
-selectedProduct: Product | null // Produto selecionado
-isAddToCartModalOpen: boolean
-isCheckoutModalOpen: boolean
+cartItems: CartItem[]           // Produtos no carrinho
+selectedProduct: Product | null // Produto clicado (para modal)
+isAddToCartModalOpen: boolean   // Controla modal adicionar
+isCheckoutModalOpen: boolean    // Controla modal finalizar
 ```
 
-#### 3. AdminDashboard
-**Responsabilidade:** Proteção de rota administrativa
+**Fluxo de uso:**
+1. Cliente vê produtos em carrosséis
+2. Clica em "Adicionar ao carrinho"
+3. Modal abre para definir quantidade/observação
+4. Produto é adicionado ao carrinho lateral
+5. Cliente clica em "Finalizar Pedido"
+6. Modal de checkout abre para preencher dados
+7. Ao confirmar, gera pedido no WhatsApp
 
-**Funcionalidades:**
-- Verifica autenticação via `sessionStorage`
-- Redireciona para `/admin` se não autenticado
-- Renderiza `AdminPage` se autenticado
+---
 
-**Autenticação:**
+#### 🔐 3. AdminDashboard (Proteção de Rota)
+
+**O que faz:** Garante que só administradores acessem painel admin  
+**Responsabilidade:** Verificar autenticação e controlar acesso
+
+**Como funciona a verificação:**
 ```typescript
+// Checa se há autenticação salva no navegador
 const isAuthenticated = sessionStorage.getItem("adminAuth") === "true";
+
+// Se não autenticado → redireciona para /admin
+// Se autenticado → mostra AdminPage
 ```
 
-#### 4. AdminLogin
-**Responsabilidade:** Autenticação de administradores
+**Por que sessionStorage?**
+- Armazena dados temporários no navegador
+- Dados são perdidos ao fechar aba (mais seguro)
+- Alternativa: localStorage (persiste mesmo após fechar)
 
-**Credenciais:**
+---
+
+#### 🔑 4. AdminLogin (Tela de Login)
+
+**O que faz:** Autentica administradores para acessar painel  
+**Responsabilidade:** Validar credenciais e criar sessão
+
+**Credenciais padrão:**
 ```typescript
-username: "admin"
-password: "admin123"
+Usuário: "admin"
+Senha: "admin123"
 ```
 
-**Fluxo:**
-1. Usuário insere credenciais
-2. Validação local
-3. Armazena token em `sessionStorage`
+**Fluxo de login:**
+1. Admin digita usuário e senha
+2. Sistema valida (comparação simples - sem banco)
+3. Se correto: salva `adminAuth = true` no sessionStorage
 4. Redireciona para `/admin/dashboard`
+5. Se incorreto: exibe mensagem de erro
 
-#### 5. AdminPage
-**Responsabilidade:** Gerenciamento de produtos
+**⚠️ Nota de segurança:**  
+Autenticação atual é simples (hardcoded). Em produção real deveria:
+- Validar contra banco de dados
+- Usar hash de senha (bcrypt)
+- Implementar JWT (JSON Web Tokens)
+- Rate limiting para prevenir ataques
+
+---
+
+#### ⚙️ 5. AdminPage (Painel de Gerenciamento)
+
+**O que faz:** Interface CRUD completa para gerenciar produtos  
+**Responsabilidade:** Criar, visualizar, editar e deletar produtos
 
 **Funcionalidades:**
-- Listagem de produtos por categoria
-- Adicionar novo produto
-- Editar produto existente
-- Excluir produto
-- Logout
+- 📋 Listagem de produtos organizados por categoria
+- ➕ Adicionar novo produto (modal com formulário)
+- ✏️ Editar produto existente (modal pré-preenchido)
+- 🗑️ Excluir produto (modal de confirmação)
+- 🚪 Botão de logout (limpa sessão)
 
-#### 6. Cart
-**Responsabilidade:** Exibição e manipulação do carrinho
+**CRUD - O que significa?**
+- **C**reate (Criar): Adicionar novo produto
+- **R**ead (Ler): Visualizar lista de produtos
+- **U**pdate (Atualizar): Editar informações do produto
+- **D**elete (Deletar): Remover produto
+
+---
+
+#### 🛒 6. Cart (Carrinho de Compras)
+
+**O que faz:** Exibe produtos adicionados e gerencia quantidades  
+**Responsabilidade:** Manipulação de itens do carrinho
 
 **Funcionalidades:**
-- Exibir itens do carrinho
-- Aumentar/diminuir quantidade
-- Remover itens
-- Calcular total
-- Botão de checkout
+- 📦 Listar produtos adicionados
+- ➕➖ Aumentar/diminuir quantidade
+- 🗑️ Remover item do carrinho
+- 💰 Calcular total automaticamente
+- ✅ Botão "Finalizar Pedido"
 
-#### 7. CheckoutModal
-**Responsabilidade:** Coleta de dados do cliente e finalização
+**Como funciona o cálculo:**
+```typescript
+// Para cada item: preço × quantidade
+// Total = soma de todos os itens
+const total = cartItems.reduce((sum, item) => 
+  sum + (item.price * item.quantity), 0
+);
+```
 
-**Campos:**
+**Estado:**
+- Carrinho fica fixo na lateral direita (sticky position)
+- Acompanha scroll da página
+- Responsivo: vira drawer (gaveta) no mobile
+
+---
+
+#### 📋 7. CheckoutModal (Finalizar Pedido)
+
+**O que faz:** Coleta dados do cliente para enviar pedido  
+**Responsabilidade:** Formulário completo de checkout
+
+**Dados coletados:**
 ```typescript
 interface CustomerData {
-  name: string;
-  phone: string; // Máscara: (00) 00000-0000
-  deliveryType: "delivery" | "pickup";
-  cep?: string; // Máscara: 00000-000
-  street?: string;
+  name: string;              // Nome completo
+  phone: string;             // (00) 00000-0000
+  deliveryType: string;      // "delivery" ou "pickup"
+  
+  // Campos de endereço (se delivery)
+  cep?: string;              // 00000-000
+  street?: string;           // Preenchido automaticamente
   number?: string;
   complement?: string;
-  neighborhood?: string;
-  city?: string;
-  uf?: string;
-  additionalComments: string;
+  neighborhood?: string;     // Preenchido automaticamente
+  city?: string;             // Preenchido automaticamente
+  uf?: string;               // Preenchido automaticamente
+  
+  additionalComments: string; // Observações
 }
 ```
 
-**Funcionalidades:**
-- Máscara de telefone com IMask
-- Máscara de CEP com IMask
-- Busca automática de endereço via ViaCEP
-- Opção de entrega ou retirada
-- Validação de campos obrigatórios
+**Funcionalidades inteligentes:**
 
-### Services (Serviços)
+1. **Máscaras automáticas (IMask):**
+   - Telefone: `(00) 00000-0000`
+   - CEP: `00000-000`
 
-#### api.ts - Product Service
-**Endpoint Base:** 
-- Produção: `/api` (mesmo domínio)
-- Desenvolvimento: `http://localhost:3000/api`
+2. **Busca de CEP (ViaCEP API):**
+   - Cliente digita CEP
+   - Sistema busca automaticamente: rua, bairro, cidade, estado
+   - Cliente só precisa completar número e complemento
 
-**Métodos:**
+3. **Validação:**
+   - Campos obrigatórios marcados
+   - Valida formato de telefone e CEP
+   - Se "delivery" → endereço obrigatório
+   - Se "pickup" → endereço opcional
+
+4. **Finalização:**
+   - Gera mensagem formatada
+   - Abre WhatsApp com pedido pronto
+   - Cliente só precisa enviar
+
+---
+
+### 🔌 Services (Camada de Serviços)
+
+**O que são Services?**  
+Camada intermediária que encapsula comunicação com APIs externas. Separa lógica de negócio dos componentes.
+
+**Por que usar?**  
+- Reutilização: vários componentes usam o mesmo service
+- Manutenção: se API mudar, altera só o service
+- Organização: componentes ficam mais limpos
+
+---
+
+#### 🌐 api.ts - Product Service
+
+**Função:** Comunicação com API de produtos (backend)
+
+**Endpoint Base:**
+- 🌍 **Produção:** `/api` (mesmo domínio - Vercel)
+- 💻 **Desenvolvimento:** `http://localhost:3000/api` (Express local)
+
+**Métodos disponíveis:**
 ```typescript
-productService.getAll() // GET /api/products
-productService.getByCategory(category) // GET /api/products (filtrado)
-productService.getById(id) // GET /api/products/:id
-productService.create(product) // POST /api/products
+// Buscar todos os produtos
+productService.getAll() 
+// → GET /api/products
+
+// Buscar por categoria específica
+productService.getByCategory(category) 
+// → GET /api/products?category=doces
+
+// Buscar produto específico por ID
+productService.getById(id) 
+// → GET /api/products/5
+
+// Criar novo produto
+productService.create(product) 
+// → POST /api/products
 productService.update(id, product) // PUT /api/products/:id
 productService.delete(id) // DELETE /api/products/:id
 ```
