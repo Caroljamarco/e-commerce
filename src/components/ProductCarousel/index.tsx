@@ -24,33 +24,31 @@ export function ProductCarousel({ title, products, onAddToCart }: ProductCarouse
   };
 
   return (
-    <div className="mb-12">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-bold text-gradient">{title}</h2>
-        <div className="flex gap-2">
+    <div className="product-carousel">
+      <div className="product-carousel-header">
+        <h2 className="product-carousel-title">{title}</h2>
+        <div className="product-carousel-controls">
           <button
             onClick={() => scroll("left")}
-            className="btn btn-outline"
-            style={{ width: '2.5rem', height: '2.5rem', padding: 0 }}
+            className="product-carousel-btn"
           >
-            <ChevronLeft style={{ width: '1.25rem', height: '1.25rem' }} />
+            <ChevronLeft className="product-carousel-btn-icon" />
           </button>
           <button
             onClick={() => scroll("right")}
-            className="btn btn-outline"
-            style={{ width: '2.5rem', height: '2.5rem', padding: 0 }}
+            className="product-carousel-btn"
           >
-            <ChevronRight style={{ width: '1.25rem', height: '1.25rem' }} />
+            <ChevronRight className="product-carousel-btn-icon" />
           </button>
         </div>
       </div>
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', paddingBottom: '1rem' }}
+        className="product-carousel-list product-carousel-scroll"
+        style={{ overflowX: 'auto', scrollBehavior: 'smooth', display: 'flex', gap: '1.5rem', paddingBottom: '1rem' }}
       >
         {products.map((product) => (
-          <div key={product.id}>
+          <div key={product.id} style={{ minWidth: '320px', flex: '0 0 auto' }}>
             <ProductCard
               product={product}
               onAddToCart={onAddToCart}

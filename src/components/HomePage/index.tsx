@@ -14,9 +14,10 @@ import type { Product, CartItem, CustomerData } from "../../types";
 interface HomePageProps {
   potatoProducts: Product[];
   pastaProducts: Product[];
+  loading?: boolean;
 }
 
-export function HomePage({ potatoProducts, pastaProducts }: HomePageProps) {
+export function HomePage({ potatoProducts, pastaProducts, loading }: HomePageProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isAddToCartModalOpen, setIsAddToCartModalOpen] = useState(false);
@@ -88,9 +89,9 @@ export function HomePage({ potatoProducts, pastaProducts }: HomePageProps) {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
+  <div className="min-h-screen homepage-bg">
       {/* Header */}
-      <header className="gradient-bg" style={{ padding: '2rem 0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
+  <header className="gradient-bg homepage-header">
         <div className="container">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
@@ -98,8 +99,8 @@ export function HomePage({ potatoProducts, pastaProducts }: HomePageProps) {
                 <img src="/logobatata.png" alt="Delícias da Casa logo" className="header-logo header-logo-large" />
               </div>
               <div>
-                <h1 className="text-4xl font-bold" style={{ color: 'white' }}>Delícias da Casa</h1>
-                <p style={{ color: 'rgba(255,255,255,0.95)', fontSize: '1.125rem' }}>
+                <h1 className="text-4xl font-bold homepage-title">Delícias da Casa</h1>
+                <p className="homepage-subtitle">
                   Batatas recheadas e massas artesanais com entrega via WhatsApp
                 </p>
               </div>
@@ -109,11 +110,16 @@ export function HomePage({ potatoProducts, pastaProducts }: HomePageProps) {
         </div>
       </header>
 
-      <div className="container" style={{ padding: '2rem 0' }}>
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '2rem' }}>
-          {/* Main Content */}
-          <div style={{ gridColumn: 'span 3 / span 3' }}>
-            <div style={{ marginBottom: '3rem' }}>
+  <div className="container homepage-content">
+    <div className="homepage-grid">
+      <div className="homepage-main">
+        {loading ? (
+          <div className="homepage-loading">
+            <p>Carregando produtos...</p>
+          </div>
+        ) : (
+          <>
+            <div className="homepage-carousel">
               <ProductCarousel
                 title="🥔 Batatas Recheadas"
                 products={potatoProducts}
@@ -127,18 +133,29 @@ export function HomePage({ potatoProducts, pastaProducts }: HomePageProps) {
                 onAddToCart={handleAddToCart}
               />
             </div>
-          </div>
-
-          {/* Sidebar Cart */}
-          <div style={{ gridColumn: 'span 1 / span 1' }}>
-            <Cart
-              items={cartItems}
-              onUpdateQuantity={handleUpdateQuantity}
-              onRemoveItem={handleRemoveItem}
-              onCheckout={handleCheckout}
-            />
-          </div>
-        </div>
+          </>
+        )}
+      </div>
+      <div className="homepage-cart">
+        <Cart
+          items={cartItems}
+          onUpdateQuantity={handleUpdateQuantity}
+          onRemoveItem={handleRemoveItem}
+          onCheckout={handleCheckout}
+        />
+      </div>
+    </div>
+    {/* Carrinho abaixo dos produtos (somente mobile) */}
+    <div className="homepage-cart-mobile">
+      <Cart
+        items={cartItems}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+        onCheckout={handleCheckout}
+      />
+    </div>
+       
+       
       </div>
 
       {/* Modals */}

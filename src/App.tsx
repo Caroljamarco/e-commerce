@@ -70,14 +70,6 @@ import { productService } from "./services/api";
     }
   };
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <p>Carregando produtos...</p>
-      </div>
-    );
-  }
-
   return (
     <BrowserRouter>
       <Routes>
@@ -88,6 +80,7 @@ import { productService } from "./services/api";
             <HomePage 
               potatoProducts={potatoProducts}
               pastaProducts={pastaProducts}
+              loading={loading}
             />
           } 
         />

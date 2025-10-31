@@ -14,17 +14,20 @@ export function Cart({ items, onUpdateQuantity, onRemoveItem, onCheckout }: Cart
     0
   );
 
+  // Responsivo: ocupa toda largura no mobile, sticky só em telas médias/grandes
+  const cardClass = "cart-card";
+
   if (items.length === 0) {
     return (
-      <div className="card sticky" style={{ top: '1.5rem' }}>
-        <div className="p-6">
-          <h2 className="text-2xl font-bold text-gradient mb-4">🛒 Carrinho</h2>
-          <div className="text-center py-8">
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛒</div>
-            <p className="text-muted text-lg">
+      <div className={cardClass}>
+        <div className="cart-padding">
+          <h2 className="cart-title">🛒 Carrinho</h2>
+          <div className="cart-empty">
+            <div className="cart-icon">🛒</div>
+            <p className="cart-empty-text">
               Seu carrinho está vazio
             </p>
-            <p className="text-muted text-sm mt-2">
+            <p className="cart-empty-subtext">
               Adicione alguns itens deliciosos para continuar!
             </p>
           </div>
@@ -34,53 +37,50 @@ export function Cart({ items, onUpdateQuantity, onRemoveItem, onCheckout }: Cart
   }
 
   return (
-    <div className="card sticky" style={{ top: '1.5rem' }}>
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-gradient mb-4">🛒 Carrinho ({items.length})</h2>
-        <div className="space-y-6">
+    <div className={cardClass}>
+      <div className="cart-padding">
+        <h2 className="cart-title">🛒 Carrinho ({items.length})</h2>
+        <div className="cart-items-wrapper">
           {/* Items */}
-          <div className="space-y-4">
+          <div className="cart-items">
             {items.map((item) => (
-              <div key={item.product.id} className="flex gap-4 p-4 bg-muted rounded-lg">
-                <div style={{ width: '4rem', height: '4rem', borderRadius: '0.5rem', overflow: 'hidden', flexShrink: 0 }}>
+              <div key={item.product.id} className="cart-item">
+                <div className="cart-img-wrapper">
                   <img
                     src={item.product.image}
                     alt={item.product.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    className="cart-img"
                   />
                 </div>
-                <div className="flex-1 space-y-2">
-                  <h4 className="font-semibold">{item.product.name}</h4>
-                  <p className="text-sm text-muted">
+                <div className="cart-item-details">
+                  <h4 className="cart-item-title">{item.product.name}</h4>
+                  <p className="cart-item-price">
                     R$ {item.product.price.toFixed(2)}
                   </p>
                   {item.comment && (
-                    <p className="text-xs text-muted bg-background p-2 rounded">
+                    <p className="cart-item-comment">
                       <span className="font-medium">Obs:</span> {item.comment}
                     </p>
                   )}
-                  <div className="flex items-center gap-2">
+                  <div className="cart-actions">
                     <button
                       onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                      className="btn btn-outline"
-                      style={{ width: '2rem', height: '2rem', padding: 0 }}
+                      className="btn btn-outline cart-btn"
                     >
-                      <ChevronDown style={{ width: '1rem', height: '1rem' }} />
+                      <ChevronDown className="cart-btn-icon" />
                     </button>
-                    <span style={{ width: '2rem', textAlign: 'center', fontWeight: '500' }}>{item.quantity}</span>
+                    <span className="cart-qty">{item.quantity}</span>
                     <button
                       onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                      className="btn btn-outline"
-                      style={{ width: '2rem', height: '2rem', padding: 0 }}
+                      className="btn btn-outline cart-btn"
                     >
-                      <ChevronUp style={{ width: '1rem', height: '1rem' }} />
+                      <ChevronUp className="cart-btn-icon" />
                     </button>
                     <button
                       onClick={() => onRemoveItem(item.product.id)}
-                      className="btn btn-ghost text-destructive"
-                      style={{ width: '2rem', height: '2rem', padding: 0 }}
+                      className="btn btn-ghost text-destructive cart-btn"
                     >
-                      <Trash2 style={{ width: '1rem', height: '1rem' }} />
+                      <Trash2 className="cart-btn-icon" />
                     </button>
                   </div>
                 </div>
@@ -89,18 +89,17 @@ export function Cart({ items, onUpdateQuantity, onRemoveItem, onCheckout }: Cart
           </div>
 
           {/* Total */}
-          <div style={{ background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05))', padding: '1.5rem', borderRadius: '0.5rem', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
-            <div className="flex justify-between items-center font-bold text-lg">
+          <div className="cart-total">
+            <div className="cart-total-row">
               <span>Total:</span>
-              <span className="text-primary text-2xl">R$ {total.toFixed(2)}</span>
+              <span className="cart-total-value">R$ {total.toFixed(2)}</span>
             </div>
           </div>
 
           {/* Checkout Button */}
           <button 
             onClick={onCheckout} 
-            className="btn btn-primary w-full"
-            style={{ padding: '0.75rem', fontSize: '1.125rem', fontWeight: '600' }}
+            className="cart-checkout-btn"
           >
             🚀 Fazer Pedido
           </button>

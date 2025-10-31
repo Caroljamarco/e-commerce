@@ -9,39 +9,23 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   return (
-    <Card
-      className="w-80 flex-shrink-0 overflow-hidden"
-      style={{ height: "380px", display: "flex", flexDirection: "column" }}
-    >
-      <div className="relative h-48 overflow-hidden">
+    <Card className="product-card">
+      <div className="product-card-img-wrapper">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover"
+          className="product-card-img"
           loading="lazy"
         />
       </div>
-      <CardContent
-        className="p-4"
-        style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}
-      >
-        <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-        <p
-          className="text-muted-foreground mb-4 leading-relaxed"
-          style={{
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-          }}
-        >
-          {product.description}
-        </p>
-        <div className="flex items-center justify-between mt-auto">
-          <span className="text-primary text-2xl font-bold">R$ {product.price.toFixed(2)}</span>
+      <CardContent className="product-card-content">
+        <h3 className="product-card-title">{product.name}</h3>
+        <p className="product-card-desc">{product.description}</p>
+        <div className="product-card-footer">
+          <span className="product-card-price">R$ {product.price.toFixed(2)}</span>
           <Button
             onClick={() => onAddToCart(product)}
-            className="flex items-center gap-2 rounded-full px-4 py-2"
+            className="product-card-btn"
             size="sm"
           >
             <Plus className="w-4 h-4" />
