@@ -9,7 +9,10 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   return (
-    <Card className="w-80 flex-shrink-0 overflow-hidden">
+    <Card
+      className="w-80 flex-shrink-0 overflow-hidden"
+      style={{ height: "380px", display: "flex", flexDirection: "column" }}
+    >
       <div className="relative h-48 overflow-hidden">
         <img
           src={product.image}
@@ -18,10 +21,23 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           loading="lazy"
         />
       </div>
-      <CardContent className="p-4">
+      <CardContent
+        className="p-4"
+        style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}
+      >
         <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-        <p className="text-muted-foreground mb-4 leading-relaxed">{product.description}</p>
-        <div className="flex items-center justify-between">
+        <p
+          className="text-muted-foreground mb-4 leading-relaxed"
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {product.description}
+        </p>
+        <div className="flex items-center justify-between mt-auto">
           <span className="text-primary text-2xl font-bold">R$ {product.price.toFixed(2)}</span>
           <Button
             onClick={() => onAddToCart(product)}
