@@ -48,27 +48,37 @@ function formatOrderMessage(
   const items = cartItems
     .map(
       (item) =>
-        `- ${item.quantity}x ${item.product.name} (R$ ${item.product.price.toFixed(2)})` +
-        (item.comment ? `\n  Obs: ${item.comment}` : "")
+        `• ${item.quantity}x ${item.product.name} - R$ ${item.product.price.toFixed(2)}` +
+        (item.comment ? `\n  💬 _${item.comment}_` : "")
     )
     .join("\n");
 
   const deliveryBlock = buildDeliveryBlock(customerData);
   const paymentBlock = buildPaymentBlock(customerData);
 
-  return `🛵 *NOVO PEDIDO*
+  return `� *NOVO PEDIDO RECEBIDO* 🔔
 
-*Cliente:* ${customerData.name}
-*Telefone:* ${customerData.phone}
+━━━━━━━━━━━━━━━━━━━━
+🟢 *DADOS DO CLIENTE*
+━━━━━━━━━━━━━━━━━━━━
+
+👤 *Nome:* ${customerData.name}
+📞 *Telefone:* ${customerData.phone}
+
 ${deliveryBlock}
+
 ${paymentBlock}
 
-*ITENS DO PEDIDO:*
+━━━━━━━━━━━━━━━━━━━━
+🔴 *ITENS DO PEDIDO*
+━━━━━━━━━━━━━━━━━━━━
+
 ${items}
 
-*TOTAL: R$ ${total.toFixed(2)}*
-
-${customerData.additionalComments ? `\n*Observações:* ${customerData.additionalComments}` : ""}`;
+━━━━━━━━━━━━━━━━━━━━
+💰 *TOTAL: R$ ${total.toFixed(2)}*
+━━━━━━━━━━━━━━━━━━━━
+${customerData.additionalComments ? `\n📝 *Observações Adicionais:*\n_${customerData.additionalComments}_` : ""}`;
 }
 
 function formatConfirmationMessage(
@@ -89,7 +99,11 @@ function formatConfirmationMessage(
 
   return `✅ *Pedido Confirmado!*
 
-Olá ${customerData.name}, seu pedido foi recebido. ${confirmationDeliveryText}
+Olá ${customerData.name}, seu pedido foi recebido com sucesso! 
+
+⏰ *TEMPO DE PREPARO:* 30 a 40 minutos
+
+${confirmationDeliveryText}
 
 *ITENS DO PEDIDO:*
 ${items}
@@ -104,13 +118,21 @@ Agradecemos a preferência! 🙏`;
 // Monta bloco de entrega/retirada para a mensagem do restaurante
 function buildDeliveryBlock(customerData: CustomerData): string {
   if (customerData.deliveryType === "pickup") {
-    const storeLine = STORE_ADDRESS ? `\n*Retirada:* ${STORE_NAME} - ${STORE_ADDRESS}` : `\n*Retirada:* ${STORE_NAME}`;
-    return `*Forma:* Retirada${storeLine}`;
+    const storeLine = STORE_ADDRESS ? `${STORE_NAME}\n📍 ${STORE_ADDRESS}` : `${STORE_NAME}`;
+    return `🟢 *FORMA DE RECEBIMENTO*
+━━━━━━━━━━━━━━━━━━━━
+
+🏪 *RETIRADA NO LOCAL*
+${storeLine}`;
   }
 
   // delivery
   const address = buildAddress(customerData);
-  return `*Forma:* Entrega\n*Endereço:* ${address}`;
+  return `🟢 *ENDEREÇO DE ENTREGA*
+━━━━━━━━━━━━━━━━━━━━
+
+🚚 *ENTREGA*
+📍 ${address}`;
 }
 
 // Monta bloco de pagamento
@@ -125,10 +147,17 @@ function buildPaymentBlock(customerData: CustomerData): string {
   const paymentLabel = paymentMethods[customerData.paymentMethod];
   
   if (customerData.paymentMethod === 'money' && customerData.changeFor) {
-    return `*Pagamento:* ${paymentLabel}\n*Troco para:* ${customerData.changeFor}`;
+    return `🟢 *FORMA DE PAGAMENTO*
+━━━━━━━━━━━━━━━━━━━━
+
+${paymentLabel}
+💸 *Troco para:* R$ ${customerData.changeFor}`;
   }
   
-  return `*Pagamento:* ${paymentLabel}`;
+  return `🟢 *FORMA DE PAGAMENTO*
+━━━━━━━━━━━━━━━━━━━━
+
+${paymentLabel}`;
 }
 
 // Linha amigável para o cliente na confirmação

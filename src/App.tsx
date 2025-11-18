@@ -125,6 +125,20 @@ import { productService } from "./services/api";
             />
           } 
         />
+        
+        {/* Rota alternativa /dashboard (redireciona para /admin/dashboard) */}
+        <Route 
+          path="/dashboard" 
+          element={
+            <AdminDashboard
+              products={products}
+              onAddProduct={handleAddProduct}
+              onEditProduct={handleEditProduct}
+              onDeleteProduct={handleDeleteProduct}
+              onToggleActive={handleToggleActive}
+            />
+          } 
+        />
       </Routes>
     </BrowserRouter>
   );

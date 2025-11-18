@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -7,23 +7,42 @@ import { authService } from "../../services/auth";
 
 export function AdminLogin() {
   const navigate = useNavigate();
+  const [isChecking, setIsChecking] = useState(true);
 
   // Verificar se já está autenticado ao carregar o componente
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const session = await authService.checkSession();
-      if (session.authenticated) {
-        // Se já está autenticado, redireciona direto para o dashboard
-        navigate("/admin/dashboard");
+    let mounted = true;
+    
+    const checkAuth = async () => {
+      try {
+        // Verificar sessionStorage primeiro (mais rápido)
+        const isAuth = sessionStorage.getItem("adminAuth") === "true";
+        
+        if (isAuth) {
+          // Verificar também no servidor
+          const session = await authService.checkSession();
+          
+          if (mounted && session.authenticated) {
+            navigate("/admin/dashboard", { replace: true });
+            return;
+          }
+        }
+      } catch (error) {
+        // Não autenticado, continua na página de login
+        console.log("Not authenticated");
+      } finally {
+        if (mounted) {
+          setIsChecking(false);
+        }
       }
-    } catch (error) {
-      // Não autenticado, continua na página de login
-    }
-  };
+    };
+    
+    checkAuth();
+    
+    return () => {
+      mounted = false;
+    };
+  }, []); // Array vazio - executa apenas uma vez
 
   const handleLogin = async (username: string, password: string): Promise<boolean> => {
     try {
@@ -34,7 +53,7 @@ export function AdminLogin() {
       sessionStorage.setItem("user", JSON.stringify(response.user));
       
       toast.success("Login realizado com sucesso!");
-      navigate("/admin/dashboard");
+      navigate("/admin/dashboard", { replace: true });
       return true;
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Erro ao fazer login");
@@ -45,6 +64,23 @@ export function AdminLogin() {
   const handleCloseLoginModal = () => {
     navigate("/");
   };
+
+  // Mostrar loading enquanto verifica autenticação
+  if (isChecking) {
+    return (
+      <div className="min-h-screen" style={{ 
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⏳</div>
+          <p>Verificando autenticação...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ 

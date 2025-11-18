@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { ProductCarousel } from "../ProductCarousel";
-import { Cart } from "../Cart";
+import { FloatingCart } from "../FloatingCart";
 import { AddToCartModal } from "../AddToCartModal";
 import { CheckoutModal } from "../CheckoutModal";
 import { ThemeToggle } from "../ThemeToggle";
@@ -144,27 +144,16 @@ export function HomePage({ potatoProducts, pastaProducts, beverageProducts, load
           </>
         )}
       </div>
-      <div className="homepage-cart">
-        <Cart
-          items={cartItems}
-          onUpdateQuantity={handleUpdateQuantity}
-          onRemoveItem={handleRemoveItem}
-          onCheckout={handleCheckout}
-        />
-      </div>
     </div>
-    {/* Carrinho abaixo dos produtos (somente mobile) */}
-    <div className="homepage-cart-mobile">
-      <Cart
+  </div>
+
+      {/* Carrinho Flutuante */}
+      <FloatingCart
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
         onCheckout={handleCheckout}
       />
-    </div>
-       
-       
-      </div>
 
       {/* Modals */}
       <AddToCartModal

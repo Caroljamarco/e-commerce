@@ -48,18 +48,35 @@ export function CheckoutModal({
   const cepRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Phone mask
+    // Phone mask - limite de 11 dígitos
     if (phoneRef.current) {
-      IMask(phoneRef.current, {
-        mask: '(00) 00000-0000'
+      const phoneMask = IMask(phoneRef.current, {
+        mask: [
+          {
+            mask: '(00) 0000-0000',
+            lazy: false
+          },
+          {
+            mask: '(00) 00000-0000',
+            lazy: false
+          }
+        ]
       });
-    }
 
+      // Limpar máscara ao desmontar
+      return () => phoneMask.destroy();
+    }
+  }, []);
+
+  useEffect(() => {
     // CEP mask
     if (cepRef.current) {
-      IMask(cepRef.current, {
+      const cepMask = IMask(cepRef.current, {
         mask: '00000-000'
       });
+
+      // Limpar máscara ao desmontar
+      return () => cepMask.destroy();
     }
   }, []);
 
@@ -90,7 +107,13 @@ export function CheckoutModal({
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setCustomerData({ ...customerData, phone: value });
+    // Remove tudo que não é número para validar
+    const onlyNumbers = value.replace(/\D/g, '');
+    
+    // Limita a 11 dígitos
+    if (onlyNumbers.length <= 11) {
+      setCustomerData({ ...customerData, phone: value });
+    }
   };
 
   const total = cartItems.reduce(
@@ -100,6 +123,14 @@ export function CheckoutModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validar telefone
+    const phoneNumbers = customerData.phone.replace(/\D/g, '');
+    if (phoneNumbers.length < 10 || phoneNumbers.length > 11) {
+      toast.error('Telefone inválido! Digite um número com DDD (10 ou 11 dígitos)');
+      return;
+    }
+    
     onSubmitOrder(customerData);
     onClose();
   };
@@ -114,21 +145,25 @@ export function CheckoutModal({
         <form onSubmit={handleSubmit} className="checkout-form space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="name" className="label-small">Nome</Label>
+              <Label htmlFor="name" className="label-small">Nome *</Label>
               <Input id="name" value={customerData.name} onChange={(e) => setCustomerData({ ...customerData, name: e.target.value })} required className="" placeholder="Seu nome completo" />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone" className="label-small">WhatsApp</Label>
+              <Label htmlFor="phone" className="label-small">WhatsApp *</Label>
               <Input 
                 ref={phoneRef}
                 id="phone" 
                 type="tel" 
                 placeholder="(11) 99999-9999" 
                 value={customerData.phone} 
-                onChange={handlePhoneChange} 
+                onChange={handlePhoneChange}
+                maxLength={15}
                 required 
               />
+              <p className="text-xs text-muted-foreground mt-1">
+                Digite seu número com DDD (10 ou 11 dígitos)
+              </p>
             </div>
           </div>
 
@@ -146,10 +181,13 @@ export function CheckoutModal({
                     fontSize: '1rem',
                     fontWeight: 600,
                     transition: 'all 0.2s ease',
-                    border: '2px solid transparent',
+                    border: customerData.deliveryType === 'delivery' 
+                      ? '2px solid #10b981' 
+                      : '2px solid hsl(var(--border))',
                     background: customerData.deliveryType === 'delivery' 
-                      ? 'linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-foreground)))'
-                      : 'transparent'
+                      ? 'linear-gradient(to right, #10b981, #059669)'
+                      : 'transparent',
+                    color: customerData.deliveryType === 'delivery' ? '#ffffff' : 'inherit'
                   }}
                 >
                   🚚 Entrega
@@ -164,10 +202,13 @@ export function CheckoutModal({
                     fontSize: '1rem',
                     fontWeight: 600,
                     transition: 'all 0.2s ease',
-                    border: '2px solid transparent',
+                    border: customerData.deliveryType === 'pickup'
+                      ? '2px solid #f59e0b'
+                      : '2px solid hsl(var(--border))',
                     background: customerData.deliveryType === 'pickup'
-                      ? 'linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-foreground)))'
-                      : 'transparent'
+                      ? 'linear-gradient(to right, #f59e0b, #d97706)'
+                      : 'transparent',
+                    color: customerData.deliveryType === 'pickup' ? '#ffffff' : 'inherit'
                   }}
                 >
                   🏪 Retirar
@@ -286,7 +327,7 @@ export function CheckoutModal({
               <div className="address-fields space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="cep" className="label-small">CEP</Label>
+                    <Label htmlFor="cep" className="label-small">CEP *</Label>
                     <Input
                       ref={cepRef}
                       id="cep"
@@ -317,7 +358,13 @@ export function CheckoutModal({
                       id="number"
                       placeholder="123"
                       value={customerData.number}
-                      onChange={(e) => setCustomerData({ ...customerData, number: e.target.value })}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '');
+                        if (value.length <= 4) {
+                          setCustomerData({ ...customerData, number: value });
+                        }
+                      }}
+                      maxLength={4}
                       required
                     />
                   </div>
