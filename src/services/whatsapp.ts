@@ -10,7 +10,7 @@ export function sendOrderToRestaurant(
   total: number
 ) {
   // Número do restaurante (substitua pelo número real)
-  const restaurantPhone = "5516993343948";
+  const restaurantPhone = "5516997287873";
   
   // Monta a mensagem do pedido
   const message = formatOrderMessage(cartItems, customerData, total);
@@ -54,12 +54,14 @@ function formatOrderMessage(
     .join("\n");
 
   const deliveryBlock = buildDeliveryBlock(customerData);
+  const paymentBlock = buildPaymentBlock(customerData);
 
   return `🛵 *NOVO PEDIDO*
 
 *Cliente:* ${customerData.name}
 *Telefone:* ${customerData.phone}
 ${deliveryBlock}
+${paymentBlock}
 
 *ITENS DO PEDIDO:*
 ${items}
@@ -83,6 +85,7 @@ function formatConfirmationMessage(
     .join("\n");
 
   const confirmationDeliveryText = buildCustomerConfirmationLine(customerData);
+  const paymentInfo = buildPaymentBlock(customerData);
 
   return `✅ *Pedido Confirmado!*
 
@@ -92,6 +95,7 @@ Olá ${customerData.name}, seu pedido foi recebido. ${confirmationDeliveryText}
 ${items}
 
 *TOTAL: R$ ${total.toFixed(2)}*
+${paymentInfo}
 
 ${customerData.additionalComments ? `\n*Observações:* ${customerData.additionalComments}\n` : ""}
 Agradecemos a preferência! 🙏`;
@@ -107,6 +111,24 @@ function buildDeliveryBlock(customerData: CustomerData): string {
   // delivery
   const address = buildAddress(customerData);
   return `*Forma:* Entrega\n*Endereço:* ${address}`;
+}
+
+// Monta bloco de pagamento
+function buildPaymentBlock(customerData: CustomerData): string {
+  const paymentMethods = {
+    money: '💵 Dinheiro',
+    credit: '💳 Cartão de Crédito',
+    debit: '💳 Cartão de Débito',
+    pix: '📱 PIX'
+  };
+  
+  const paymentLabel = paymentMethods[customerData.paymentMethod];
+  
+  if (customerData.paymentMethod === 'money' && customerData.changeFor) {
+    return `*Pagamento:* ${paymentLabel}\n*Troco para:* ${customerData.changeFor}`;
+  }
+  
+  return `*Pagamento:* ${paymentLabel}`;
 }
 
 // Linha amigável para o cliente na confirmação

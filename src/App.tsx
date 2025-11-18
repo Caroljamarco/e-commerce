@@ -30,8 +30,9 @@ import { productService } from "./services/api";
     }
   };
 
-  const potatoProducts = products.filter((p) => p.category === "potato");
-  const pastaProducts = products.filter((p) => p.category === "pasta");
+  const potatoProducts = products.filter((p) => p.category === "potato" && p.active !== false);
+  const pastaProducts = products.filter((p) => p.category === "pasta" && p.active !== false);
+  const beverageProducts = products.filter((p) => p.category === "beverage" && p.active !== false);
 
   const handleAddProduct = async (productData: Omit<Product, "id">) => {
     try {
@@ -70,6 +71,25 @@ import { productService } from "./services/api";
     }
   };
 
+  const handleToggleActive = async (id: string) => {
+    try {
+      const updatedProduct = await productService.toggleActive(id);
+      setProducts(
+        products.map((p) =>
+          p.id === id ? updatedProduct : p
+        )
+      );
+      toast.success(
+        updatedProduct.active === false 
+          ? "Produto desativado com sucesso!" 
+          : "Produto ativado com sucesso!"
+      );
+    } catch (error) {
+      console.error('Error toggling product:', error);
+      toast.error('Erro ao alterar status do produto');
+    }
+  };
+
   return (
     <BrowserRouter>
       <Routes>
@@ -80,6 +100,7 @@ import { productService } from "./services/api";
             <HomePage 
               potatoProducts={potatoProducts}
               pastaProducts={pastaProducts}
+              beverageProducts={beverageProducts}
               loading={loading}
             />
           } 
@@ -100,6 +121,7 @@ import { productService } from "./services/api";
               onAddProduct={handleAddProduct}
               onEditProduct={handleEditProduct}
               onDeleteProduct={handleDeleteProduct}
+              onToggleActive={handleToggleActive}
             />
           } 
         />

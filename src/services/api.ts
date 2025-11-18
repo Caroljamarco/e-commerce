@@ -8,7 +8,8 @@ export interface Product {
   price: number;
   description: string;
   image: string;
-  category: 'potato' | 'pasta';
+  category: 'potato' | 'pasta' | 'beverage';
+  active?: boolean;
 }
 
 export const productService = {
@@ -22,7 +23,7 @@ export const productService = {
   },
 
   // GET products by category
-  async getByCategory(category: 'potato' | 'pasta'): Promise<Product[]> {
+  async getByCategory(category: 'potato' | 'pasta' | 'beverage'): Promise<Product[]> {
     const products = await this.getAll();
     return products.filter(p => p.category === category);
   },
@@ -74,5 +75,16 @@ export const productService = {
     if (!response.ok) {
       throw new Error('Failed to delete product');
     }
+  },
+
+  // PATCH toggle active status
+  async toggleActive(id: string): Promise<Product> {
+    const response = await fetch(`${API_BASE_URL}/products/${id}/toggle`, {
+      method: 'PATCH',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to toggle product status');
+    }
+    return response.json();
   },
 };

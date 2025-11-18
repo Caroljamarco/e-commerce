@@ -599,7 +599,7 @@ productService.delete(id) // DELETE /api/products/:id
 
 **Números WhatsApp:**
 ```typescript
-const restaurantPhone = "5516993343948";
+const restaurantPhone = "5516997287873";
 const customerPhone = customerData.phone; // Dinâmico
 ```
 

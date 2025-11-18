@@ -14,10 +14,11 @@ import type { Product, CartItem, CustomerData } from "../../types";
 interface HomePageProps {
   potatoProducts: Product[];
   pastaProducts: Product[];
+  beverageProducts: Product[];
   loading?: boolean;
 }
 
-export function HomePage({ potatoProducts, pastaProducts, loading }: HomePageProps) {
+export function HomePage({ potatoProducts, pastaProducts, beverageProducts, loading }: HomePageProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isAddToCartModalOpen, setIsAddToCartModalOpen] = useState(false);
@@ -126,10 +127,17 @@ export function HomePage({ potatoProducts, pastaProducts, loading }: HomePagePro
                 onAddToCart={handleAddToCart}
               />
             </div>
-            <div>
+            <div className="homepage-carousel">
               <ProductCarousel
                 title="🍝 Massas Artesanais"
                 products={pastaProducts}
+                onAddToCart={handleAddToCart}
+              />
+            </div>
+            <div>
+              <ProductCarousel
+                title="🥤 Refrigerantes"
+                products={beverageProducts}
                 onAddToCart={handleAddToCart}
               />
             </div>

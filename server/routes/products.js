@@ -6,7 +6,8 @@ const db = require('../db');
 const formatProduct = (product) => ({
   ...product,
   id: product.id.toString(),
-  price: parseFloat(product.price)
+  price: parseFloat(product.price),
+  active: Boolean(product.active)
 });
 
 // GET all products
@@ -104,6 +105,33 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting product:', error);
     res.status(500).json({ error: 'Failed to delete product' });
+  }
+});
+
+// PATCH toggle active status
+router.patch('/:id/toggle', async (req, res) => {
+  try {
+    // Buscar produto atual
+    const [rows] = await db.query('SELECT active FROM products WHERE id = ?', [req.params.id]);
+    
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    
+    // MySQL retorna tinyint(1) como 0 ou 1
+    const currentStatus = Boolean(rows[0].active);
+    const newStatus = currentStatus ? 0 : 1; // Inverter: true -> 0 (false), false -> 1 (true)
+    
+    // Atualizar status
+    await db.query('UPDATE products SET active = ? WHERE id = ?', [newStatus, req.params.id]);
+    
+    // Buscar produto atualizado
+    const [updatedRows] = await db.query('SELECT * FROM products WHERE id = ?', [req.params.id]);
+    
+    res.json(formatProduct(updatedRows[0]));
+  } catch (error) {
+    console.error('Error toggling product status:', error);
+    res.status(500).json({ error: 'Failed to toggle product status' });
   }
 });
 

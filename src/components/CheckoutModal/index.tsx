@@ -31,6 +31,8 @@ export function CheckoutModal({
     name: "",
     phone: "",
     deliveryType: "delivery",
+    paymentMethod: "money",
+    changeFor: "",
     cep: "",
     street: "",
     number: "",
@@ -175,6 +177,108 @@ export function CheckoutModal({
                 <p className="text-sm mt-3 text-muted-foreground text-center" style={{ maxWidth: '80%', margin: '0 auto' }}>
                   ⏰ Seu pedido estará pronto para retirada em aproximadamente 40 minutos a 1 hora após a confirmação.
                 </p>
+              )}
+            </div>
+
+            {/* Forma de Pagamento */}
+            <div className="payment-method-selector">
+              <Label className="label-small mb-3">Forma de Pagamento</Label>
+              <div className="delivery-options" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+                <button
+                  type="button"
+                  className={`delivery-option ${customerData.paymentMethod === 'money' ? 'active' : ''}`}
+                  onClick={() => setCustomerData({ ...customerData, paymentMethod: 'money', changeFor: '' })}
+                  style={{
+                    borderRadius: '16px',
+                    padding: '12px 16px',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    transition: 'all 0.2s ease',
+                    border: '2px solid',
+                    borderColor: customerData.paymentMethod === 'money' ? 'hsl(var(--primary))' : 'hsl(var(--border))',
+                    background: customerData.paymentMethod === 'money' 
+                      ? 'linear-gradient(to right, hsl(var(--primary) / 0.1), hsl(var(--primary-foreground) / 0.05))'
+                      : 'transparent',
+                    color: customerData.paymentMethod === 'money' ? 'hsl(var(--primary))' : 'inherit'
+                  }}
+                >
+                  💵 Dinheiro
+                </button>
+                <button
+                  type="button"
+                  className={`delivery-option ${customerData.paymentMethod === 'credit' ? 'active' : ''}`}
+                  onClick={() => setCustomerData({ ...customerData, paymentMethod: 'credit', changeFor: '' })}
+                  style={{
+                    borderRadius: '16px',
+                    padding: '12px 16px',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    transition: 'all 0.2s ease',
+                    border: '2px solid',
+                    borderColor: customerData.paymentMethod === 'credit' ? 'hsl(var(--primary))' : 'hsl(var(--border))',
+                    background: customerData.paymentMethod === 'credit'
+                      ? 'linear-gradient(to right, hsl(var(--primary) / 0.1), hsl(var(--primary-foreground) / 0.05))'
+                      : 'transparent',
+                    color: customerData.paymentMethod === 'credit' ? 'hsl(var(--primary))' : 'inherit'
+                  }}
+                >
+                  💳 Crédito
+                </button>
+                <button
+                  type="button"
+                  className={`delivery-option ${customerData.paymentMethod === 'debit' ? 'active' : ''}`}
+                  onClick={() => setCustomerData({ ...customerData, paymentMethod: 'debit', changeFor: '' })}
+                  style={{
+                    borderRadius: '16px',
+                    padding: '12px 16px',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    transition: 'all 0.2s ease',
+                    border: '2px solid',
+                    borderColor: customerData.paymentMethod === 'debit' ? 'hsl(var(--primary))' : 'hsl(var(--border))',
+                    background: customerData.paymentMethod === 'debit'
+                      ? 'linear-gradient(to right, hsl(var(--primary) / 0.1), hsl(var(--primary-foreground) / 0.05))'
+                      : 'transparent',
+                    color: customerData.paymentMethod === 'debit' ? 'hsl(var(--primary))' : 'inherit'
+                  }}
+                >
+                  💳 Débito
+                </button>
+                <button
+                  type="button"
+                  className={`delivery-option ${customerData.paymentMethod === 'pix' ? 'active' : ''}`}
+                  onClick={() => setCustomerData({ ...customerData, paymentMethod: 'pix', changeFor: '' })}
+                  style={{
+                    borderRadius: '16px',
+                    padding: '12px 16px',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    transition: 'all 0.2s ease',
+                    border: '2px solid',
+                    borderColor: customerData.paymentMethod === 'pix' ? 'hsl(var(--primary))' : 'hsl(var(--border))',
+                    background: customerData.paymentMethod === 'pix'
+                      ? 'linear-gradient(to right, hsl(var(--primary) / 0.1), hsl(var(--primary-foreground) / 0.05))'
+                      : 'transparent',
+                    color: customerData.paymentMethod === 'pix' ? 'hsl(var(--primary))' : 'inherit'
+                  }}
+                >
+                  📱 PIX
+                </button>
+              </div>
+              
+              {/* Campo de troco apenas se escolher dinheiro */}
+              {customerData.paymentMethod === 'money' && (
+                <div className="space-y-2 mt-3">
+                  <Label htmlFor="changeFor" className="label-small">Precisa de troco? (opcional)</Label>
+                  <Input
+                    id="changeFor"
+                    type="text"
+                    placeholder="Ex: R$ 50,00"
+                    value={customerData.changeFor}
+                    onChange={(e) => setCustomerData({ ...customerData, changeFor: e.target.value })}
+                  />
+                  <p className="text-sm text-muted-foreground">Informe o valor da nota para levarmos o troco</p>
+                </div>
               )}
             </div>
 

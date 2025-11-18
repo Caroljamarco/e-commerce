@@ -4,7 +4,8 @@ export interface Product {
   description: string;
   price: number;
   image: string;
-  category: "potato" | "pasta";
+  category: "potato" | "pasta" | "beverage";
+  active?: boolean;
 }
 
 export interface CartItem {
@@ -17,6 +18,8 @@ export interface CustomerData {
   name: string;
   phone: string;
   deliveryType: "delivery" | "pickup";
+  paymentMethod: "money" | "credit" | "debit" | "pix";
+  changeFor?: string;
   cep?: string;
   street?: string;
   number?: string;

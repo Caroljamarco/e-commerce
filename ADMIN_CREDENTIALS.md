@@ -5,8 +5,8 @@ Para acessar o painel administrativo do sistema, utilize as seguintes credenciai
 ## Acesso Administrativo
 
 **URL de Login:** `http://localhost:5173/admin`  
-**Usuário:** `admin`  
-**Senha:** `admin123`
+**Usuário:** `root`  
+**Senha:** `admin`
 
 ## Como Acessar
 

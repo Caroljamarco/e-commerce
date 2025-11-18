@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Trash2, Plus, ArrowLeft, LogOut } from "lucide-react";
+import { Pencil, Trash2, Plus, ArrowLeft, LogOut, Eye, EyeOff } from "lucide-react";
 import { Button } from "../ui";
 import { ProductModal } from "./ProductModal";
 import { DeleteConfirmModal } from "./DeleteConfirmModal";
@@ -11,6 +11,7 @@ interface AdminPageProps {
   onAddProduct: (product: Omit<Product, "id">) => void;
   onEditProduct: (id: string, product: Omit<Product, "id">) => void;
   onDeleteProduct: (id: string) => void;
+  onToggleActive: (id: string) => void;
   onBack: () => void;
   onLogout?: () => void;
 }
@@ -20,6 +21,7 @@ export function AdminPage({
   onAddProduct,
   onEditProduct,
   onDeleteProduct,
+  onToggleActive,
   onBack,
   onLogout,
 }: AdminPageProps) {
@@ -53,6 +55,7 @@ export function AdminPage({
 
   const potatoProducts = products.filter((p) => p.category === "potato");
   const pastaProducts = products.filter((p) => p.category === "pasta");
+  const beverageProducts = products.filter((p) => p.category === "beverage");
 
   return (
     <div className="admin-container">
@@ -100,18 +103,50 @@ export function AdminPage({
           </h2>
           <div className="products-list">
             {potatoProducts.map((product) => (
-              <div key={product.id} className="product-card-admin">
+              <div 
+                key={product.id} 
+                className="product-card-admin"
+                style={{ opacity: product.active === false ? 0.6 : 1 }}
+              >
                 <img
                   src={product.image}
                   alt={product.name}
                   className="product-image-admin"
                 />
                 <div className="product-info">
-                  <h3 className="product-name">{product.name}</h3>
+                  <h3 className="product-name">
+                    {product.name}
+                    {product.active === false && (
+                      <span style={{ 
+                        marginLeft: '8px',
+                        fontSize: '0.75rem',
+                        padding: '2px 8px',
+                        backgroundColor: '#fbbf24',
+                        color: '#78350f',
+                        borderRadius: '4px',
+                        fontWeight: 'bold'
+                      }}>
+                        INATIVO
+                      </span>
+                    )}
+                  </h3>
                   <p className="product-description">{product.description}</p>
                   <p className="product-price">R$ {product.price.toFixed(2)}</p>
                 </div>
                 <div className="product-actions">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onToggleActive(product.id)}
+                    className="action-btn"
+                    style={{
+                      borderColor: product.active === false ? '#10b981' : '#f59e0b',
+                      color: product.active === false ? '#10b981' : '#f59e0b'
+                    }}
+                  >
+                    {product.active === false ? <Eye size={16} /> : <EyeOff size={16} />}
+                    {product.active === false ? 'Ativar' : 'Desativar'}
+                  </Button>
                   <Button
                     variant="outline"
                     size="sm"
@@ -142,18 +177,124 @@ export function AdminPage({
           </h2>
           <div className="products-list">
             {pastaProducts.map((product) => (
-              <div key={product.id} className="product-card-admin">
+              <div 
+                key={product.id} 
+                className="product-card-admin"
+                style={{ opacity: product.active === false ? 0.6 : 1 }}
+              >
                 <img
                   src={product.image}
                   alt={product.name}
                   className="product-image-admin"
                 />
                 <div className="product-info">
-                  <h3 className="product-name">{product.name}</h3>
+                  <h3 className="product-name">
+                    {product.name}
+                    {product.active === false && (
+                      <span style={{ 
+                        marginLeft: '8px',
+                        fontSize: '0.75rem',
+                        padding: '2px 8px',
+                        backgroundColor: '#fbbf24',
+                        color: '#78350f',
+                        borderRadius: '4px',
+                        fontWeight: 'bold'
+                      }}>
+                        INATIVO
+                      </span>
+                    )}
+                  </h3>
                   <p className="product-description">{product.description}</p>
                   <p className="product-price">R$ {product.price.toFixed(2)}</p>
                 </div>
                 <div className="product-actions">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onToggleActive(product.id)}
+                    className="action-btn"
+                    style={{
+                      borderColor: product.active === false ? '#10b981' : '#f59e0b',
+                      color: product.active === false ? '#10b981' : '#f59e0b'
+                    }}
+                  >
+                    {product.active === false ? <Eye size={16} /> : <EyeOff size={16} />}
+                    {product.active === false ? 'Ativar' : 'Desativar'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleEditClick(product)}
+                    className="action-btn edit-btn"
+                  >
+                    <Pencil size={16} />
+                    Editar
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDeleteClick(product.id)}
+                    className="action-btn delete-btn"
+                  >
+                    <Trash2 size={16} />
+                    Excluir
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="product-section">
+          <h2 className="section-title">
+            🥤 Refrigerantes ({beverageProducts.length})
+          </h2>
+          <div className="products-list">
+            {beverageProducts.map((product) => (
+              <div 
+                key={product.id} 
+                className="product-card-admin"
+                style={{ opacity: product.active === false ? 0.6 : 1 }}
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="product-image-admin"
+                />
+                <div className="product-info">
+                  <h3 className="product-name">
+                    {product.name}
+                    {product.active === false && (
+                      <span style={{ 
+                        marginLeft: '8px',
+                        fontSize: '0.75rem',
+                        padding: '2px 8px',
+                        backgroundColor: '#fbbf24',
+                        color: '#78350f',
+                        borderRadius: '4px',
+                        fontWeight: 'bold'
+                      }}>
+                        INATIVO
+                      </span>
+                    )}
+                  </h3>
+                  <p className="product-description">{product.description}</p>
+                  <p className="product-price">R$ {product.price.toFixed(2)}</p>
+                </div>
+                <div className="product-actions">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onToggleActive(product.id)}
+                    className="action-btn"
+                    style={{
+                      borderColor: product.active === false ? '#10b981' : '#f59e0b',
+                      color: product.active === false ? '#10b981' : '#f59e0b'
+                    }}
+                  >
+                    {product.active === false ? <Eye size={16} /> : <EyeOff size={16} />}
+                    {product.active === false ? 'Ativar' : 'Desativar'}
+                  </Button>
                   <Button
                     variant="outline"
                     size="sm"

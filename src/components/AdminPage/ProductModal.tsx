@@ -27,7 +27,7 @@ export function ProductModal({
     description: "",
     price: "",
     image: "",
-    category: "potato" as "potato" | "pasta",
+    category: "potato" as "potato" | "pasta" | "beverage",
   });
 
   useEffect(() => {
@@ -135,7 +135,7 @@ export function ProductModal({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  category: e.target.value as "potato" | "pasta",
+                  category: e.target.value as "potato" | "pasta" | "beverage",
                 })
               }
               required
@@ -143,6 +143,7 @@ export function ProductModal({
             >
               <option value="potato">🥔 Batatas Recheadas</option>
               <option value="pasta">🍝 Massas Artesanais</option>
+              <option value="beverage">🥤 Refrigerantes</option>
             </select>
           </div>
 

@@ -10,6 +10,7 @@ interface AdminDashboardProps {
   onAddProduct: (product: Omit<Product, "id">) => void;
   onEditProduct: (id: string, product: Omit<Product, "id">) => void;
   onDeleteProduct: (id: string) => void;
+  onToggleActive: (id: string) => void;
 }
 
 export function AdminDashboard({
@@ -17,6 +18,7 @@ export function AdminDashboard({
   onAddProduct,
   onEditProduct,
   onDeleteProduct,
+  onToggleActive,
 }: AdminDashboardProps) {
   const navigate = useNavigate();
 
@@ -51,6 +53,7 @@ export function AdminDashboard({
       onAddProduct={onAddProduct}
       onEditProduct={onEditProduct}
       onDeleteProduct={onDeleteProduct}
+      onToggleActive={onToggleActive}
       onBack={handleBack}
       onLogout={handleLogout}
     />
