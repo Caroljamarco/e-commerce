@@ -48,6 +48,7 @@ const getPaymentMethodLabel = (method: string) => {
 
 export function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [filterDate, setFilterDate] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -79,6 +80,14 @@ export function AdminOrders() {
     loadOrders();
   }, []);
 
+  const filteredOrders = filterDate
+    ? orders.filter((order) => {
+        if (!order.created_at) return false;
+        const orderDate = new Date(order.created_at).toISOString().split('T')[0];
+        return orderDate === filterDate;
+      })
+    : orders;
+
   return (
     <div className="admin-container">
       <div className="admin-header">
@@ -91,6 +100,21 @@ export function AdminOrders() {
             <p className="admin-subtitle">Acompanhe e atualize o status dos pedidos</p>
           </div>
         </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <label htmlFor="order-filter-date" style={{ fontWeight: 'bold' }}>
+            Filtrar por dia:
+          </label>
+          <input
+            id="order-filter-date"
+            type="date"
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+            style={{ padding: '0.4rem 0.6rem', borderRadius: '6px', border: '1px solid #d1d5db' }}
+          />
+          <Button variant="outline" onClick={() => setFilterDate('')}>
+            Mostrar todos
+          </Button>
+        </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
           <Button variant="outline" onClick={() => navigate('/admin/dashboard')}>Produtos</Button>
         </div>
@@ -102,11 +126,16 @@ export function AdminOrders() {
         <>
           <section className="order-section">
             <h2 className="section-title">📦 Pedidos ({orders.length})</h2>
+              {filterDate && (
+                <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#4b5563' }}>
+                  Mostrando pedidos de <strong>{filterDate}</strong> ({filteredOrders.length})
+                </p>
+              )}
             {orders.length === 0 ? (
               <p>Nenhum pedido registrado.</p>
             ) : (
               <div className="orders-list" style={{ gap: '1.5rem' }}>
-                {orders.map((order) => (
+                {filteredOrders.map((order) => (
                   <div
                     key={order.id}
                     className="order-card"

@@ -7,7 +7,9 @@ module.exports = router;
 // Get all orders
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM orders ORDER BY created_at DESC");
+    const [rows] = await db.query(
+      "SELECT * FROM orders ORDER BY created_at DESC",
+    );
     const orders = rows.map((order) => ({
       ...order,
       id: order.id.toString(),
