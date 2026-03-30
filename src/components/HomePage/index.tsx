@@ -8,6 +8,7 @@ import { CheckoutModal } from "../CheckoutModal";
 import { ThemeToggle } from "../ThemeToggle";
 
 import { sendOrderToRestaurant, sendConfirmationToCustomer } from "../../services/whatsapp";
+import { orderService } from "../../services/api";
 
 import type { Product, CartItem, CustomerData } from "../../types";
 
@@ -68,11 +69,35 @@ export function HomePage({ potatoProducts, pastaProducts, beverageProducts, load
     setIsCheckoutModalOpen(true);
   };
 
-  const handleSubmitOrder = (customerData: CustomerData) => {
+  const handleSubmitOrder = async (customerData: CustomerData) => {
     const total = cartItems.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
       0
     );
+
+    try {
+      await orderService.create({
+        customer_name: customerData.name,
+        phone: customerData.phone,
+        delivery_type: customerData.deliveryType,
+        payment_method: customerData.paymentMethod,
+        change_for: customerData.changeFor || null,
+        cep: customerData.cep || null,
+        street: customerData.street || null,
+        number: customerData.number || null,
+        complement: customerData.complement || null,
+        neighborhood: customerData.neighborhood || null,
+        city: customerData.city || null,
+        uf: customerData.uf || null,
+        additional_comments: customerData.additionalComments || null,
+        total,
+        items: cartItems,
+      });
+    } catch (error) {
+      console.error('Erro ao salvar pedido:', error);
+      toast.error('Erro ao salvar o pedido. Tente novamente.');
+      return;
+    }
 
     // Enviar pedido para o restaurante
     sendOrderToRestaurant(cartItems, customerData, total);

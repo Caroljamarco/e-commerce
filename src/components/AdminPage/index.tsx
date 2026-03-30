@@ -12,6 +12,7 @@ interface AdminPageProps {
   onEditProduct: (id: string, product: Omit<Product, "id">) => void;
   onDeleteProduct: (id: string) => void;
   onToggleActive: (id: string) => void;
+  onOrders: () => void;
   onBack: () => void;
   onLogout?: () => void;
 }
@@ -22,6 +23,7 @@ export function AdminPage({
   onEditProduct,
   onDeleteProduct,
   onToggleActive,
+  onOrders,
   onBack,
   onLogout,
 }: AdminPageProps) {
@@ -75,6 +77,9 @@ export function AdminPage({
           </div>
         </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
+          <Button onClick={onOrders} className="add-product-btn">
+            📦 Pedidos
+          </Button>
           {onLogout && (
             <Button
               variant="outline"

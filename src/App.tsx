@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { HomePage } from "./components/HomePage";
 import { AdminLogin } from "./components/AdminLogin";
 import { AdminDashboard } from "./components/AdminDashboard";
+import { AdminOrders } from "./components/AdminOrders";
 
 import type { Product } from "./types";
 import { productService } from "./services/api";
@@ -125,6 +126,11 @@ import { productService } from "./services/api";
             />
           } 
         />
+
+          <Route
+            path="/admin/orders"
+            element={<AdminOrders />}
+          />
         
         {/* Rota alternativa /dashboard (redireciona para /admin/dashboard) */}
         <Route 

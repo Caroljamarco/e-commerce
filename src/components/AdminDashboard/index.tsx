@@ -60,6 +60,10 @@ export function AdminDashboard({
     navigate("/");
   };
 
+  const handleOrders = () => {
+    navigate('/admin/orders');
+  };
+
   // Mostrar loading enquanto verifica
   if (isChecking) {
     return (
@@ -89,6 +93,7 @@ export function AdminDashboard({
       onEditProduct={onEditProduct}
       onDeleteProduct={onDeleteProduct}
       onToggleActive={onToggleActive}
+      onOrders={handleOrders}
       onBack={handleBack}
       onLogout={handleLogout}
     />

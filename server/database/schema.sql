@@ -23,6 +23,29 @@ CREATE TABLE IF NOT EXISTS products (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Create orders table
+CREATE TABLE IF NOT EXISTS orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_name VARCHAR(100) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  delivery_type ENUM('delivery','pickup') NOT NULL,
+  payment_method ENUM('money','credit','debit','pix') NOT NULL,
+  change_for VARCHAR(50),
+  cep VARCHAR(10),
+  street VARCHAR(255),
+  number VARCHAR(20),
+  complement VARCHAR(255),
+  neighborhood VARCHAR(255),
+  city VARCHAR(255),
+  uf VARCHAR(2),
+  additional_comments TEXT,
+  status ENUM('recebido','em preparo','pronto','em entrega','entregue') NOT NULL DEFAULT 'recebido',
+  total DECIMAL(10,2) NOT NULL,
+  items JSON NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Create index on category for faster queries (ignora se já existir)
 CREATE INDEX IF NOT EXISTS idx_category ON products(category);
 

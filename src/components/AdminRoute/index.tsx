@@ -18,6 +18,8 @@ interface AdminRouteProps {
   onAddProduct: (product: Omit<Product, "id">) => void;
   onEditProduct: (id: string, product: Omit<Product, "id">) => void;
   onDeleteProduct: (id: string) => void;
+  onToggleActive: (id: string) => void;
+  onOrders: () => void;
 }
 
 export function AdminRoute({
@@ -25,6 +27,8 @@ export function AdminRoute({
   onAddProduct,
   onEditProduct,
   onDeleteProduct,
+  onToggleActive,
+  onOrders,
 }: AdminRouteProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
@@ -103,6 +107,8 @@ export function AdminRoute({
       onAddProduct={onAddProduct}
       onEditProduct={onEditProduct}
       onDeleteProduct={onDeleteProduct}
+      onToggleActive={onToggleActive}
+      onOrders={onOrders}
       onBack={handleBack}
       onLogout={handleLogout}
     />

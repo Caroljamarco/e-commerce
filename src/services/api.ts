@@ -1,3 +1,5 @@
+import type { Order, OrderStatus } from "../types";
+
 // In production (Vercel), use the same domain via relative '/api'.
 // In development, you can set VITE_API_URL=http://localhost:3000/api
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
@@ -84,6 +86,40 @@ export const productService = {
     });
     if (!response.ok) {
       throw new Error('Failed to toggle product status');
+    }
+    return response.json();
+  },
+};
+
+export const orderService = {
+  async getAll(): Promise<Order[]> {
+    const response = await fetch(`${API_BASE_URL}/orders`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch orders');
+    }
+    return response.json();
+  },
+
+  async create(order: Omit<Order, 'id' | 'status' | 'created_at' | 'updated_at'>): Promise<Order> {
+    const response = await fetch(`${API_BASE_URL}/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to create order');
+    }
+    return response.json();
+  },
+
+  async updateStatus(id: string, status: OrderStatus): Promise<Order> {
+    const response = await fetch(`${API_BASE_URL}/orders/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update order status');
     }
     return response.json();
   },
