@@ -100,6 +100,18 @@ export const orderService = {
     return response.json();
   },
 
+  async getStats(): Promise<{
+    todayOrders: number;
+    deliveredToday: number;
+    remainingOrders: number;
+  }> {
+    const response = await fetch(`${API_BASE_URL}/orders/stats`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch order stats');
+    }
+    return response.json();
+  },
+
   async create(order: Omit<Order, 'id' | 'status' | 'created_at' | 'updated_at'>): Promise<Order> {
     const response = await fetch(`${API_BASE_URL}/orders`, {
       method: 'POST',

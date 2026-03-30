@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+module.exports = router;
+
 // Get all orders
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await db.query(
-      "SELECT * FROM orders ORDER BY created_at DESC",
-    );
+    const [rows] = await db.query("SELECT * FROM orders ORDER BY created_at DESC");
     const orders = rows.map((order) => ({
       ...order,
       id: order.id.toString(),
@@ -139,6 +139,35 @@ router.patch("/:id/status", async (req, res) => {
   } catch (error) {
     console.error("Error updating order status:", error);
     res.status(500).json({ error: "Failed to update order status" });
+  }
+});
+
+// Get order statistics
+router.get("/stats", async (req, res) => {
+  try {
+    // Pedidos feitos hoje
+    const [todayOrders] = await db.query(
+      "SELECT COUNT(*) as count FROM orders WHERE DATE(created_at) = CURDATE()",
+    );
+
+    // Pedidos entregues hoje
+    const [deliveredToday] = await db.query(
+      "SELECT COUNT(*) as count FROM orders WHERE status = 'entregue' AND DATE(updated_at) = CURDATE()",
+    );
+
+    // Pedidos restantes (não entregues)
+    const [remainingOrders] = await db.query(
+      "SELECT COUNT(*) as count FROM orders WHERE status != 'entregue'",
+    );
+
+    res.json({
+      todayOrders: todayOrders[0].count,
+      deliveredToday: deliveredToday[0].count,
+      remainingOrders: remainingOrders[0].count,
+    });
+  } catch (error) {
+    console.error("Error fetching order stats:", error);
+    res.status(500).json({ error: "Failed to fetch order statistics" });
   }
 });
 

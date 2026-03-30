@@ -9,6 +9,43 @@ import "../AdminPage/admin.css";
 
 const statusOptions: OrderStatus[] = ['recebido', 'em preparo', 'pronto', 'em entrega', 'entregue'];
 
+const getStatusColor = (status: OrderStatus) => {
+  switch (status) {
+    case 'recebido': return '#f59e0b'; // amarelo
+    case 'em preparo': return '#3b82f6'; // azul
+    case 'pronto': return '#10b981'; // verde
+    case 'em entrega': return '#8b5cf6'; // roxo
+    case 'entregue': return '#6b7280'; // cinza
+    default: return '#6b7280';
+  }
+};
+
+const getStatusIcon = (status: OrderStatus) => {
+  switch (status) {
+    case 'recebido': return '📥';
+    case 'em preparo': return '👨‍🍳';
+    case 'pronto': return '✅';
+    case 'em entrega': return '🚚';
+    case 'entregue': return '📦';
+    default: return '📋';
+  }
+};
+
+const getPaymentMethodLabel = (method: string) => {
+  switch (method) {
+    case 'money':
+      return 'Dinheiro';
+    case 'credit':
+      return 'Crédito';
+    case 'debit':
+      return 'Débito';
+    case 'pix':
+      return 'PIX';
+    default:
+      return method;
+  }
+};
+
 export function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +62,7 @@ export function AdminOrders() {
       setLoading(false);
     }
   };
+
 
   const updateStatus = async (id: string, status: OrderStatus) => {
     try {
@@ -61,39 +99,130 @@ export function AdminOrders() {
       {loading ? (
         <div style={{ textAlign: 'center', padding: '2rem' }}>Carregando pedidos...</div>
       ) : (
-        <section className="order-section">
-          <h2 className="section-title">📦 Pedidos ({orders.length})</h2>
-          {orders.length === 0 ? (
-            <p>Nenhum pedido registrado.</p>
-          ) : (
-            <div className="orders-list">
-              {orders.map((order) => (
-                <div key={order.id} className="order-card">
-                  <div className="order-header">
-                    <span><strong>Pedido:</strong> {order.id}</span>
-                    <span><strong>Status:</strong> {order.status}</span>
+        <>
+          <section className="order-section">
+            <h2 className="section-title">📦 Pedidos ({orders.length})</h2>
+            {orders.length === 0 ? (
+              <p>Nenhum pedido registrado.</p>
+            ) : (
+              <div className="orders-list" style={{ gap: '1.5rem' }}>
+                {orders.map((order) => (
+                  <div
+                    key={order.id}
+                    className="order-card"
+                    style={{
+                      border: `2px solid ${getStatusColor(order.status)}`,
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      backgroundColor: '#ffffff',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                      marginBottom: '1rem'
+                    }}
+                  >
+                    <div className="order-header" style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '1rem',
+                      paddingBottom: '0.75rem',
+                      borderBottom: '1px solid #e5e7eb'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '1.25rem' }}>📋</span>
+                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Pedido #{order.id}</span>
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        backgroundColor: getStatusColor(order.status),
+                        color: 'white',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        fontSize: '0.9rem',
+                        fontWeight: 'bold'
+                      }}>
+                        <span>{getStatusIcon(order.status)}</span>
+                        <span>{order.status}</span>
+                      </div>
+                    </div>
+
+                    <div className="order-details" style={{ marginBottom: '1.5rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                        <div>
+                          <p style={{ margin: '0.25rem 0', fontSize: '0.9rem' }}>
+                            <strong>💰 Pagamento:</strong> {getPaymentMethodLabel(order.payment_method)}
+                          </p>
+                          <p style={{ margin: '0.25rem 0', fontSize: '0.9rem' }}>
+                            <strong>📱 Telefone:</strong> {order.phone}
+                          </p>
+                        </div>
+                        <div>
+                          <p style={{ margin: '0.25rem 0', fontSize: '0.9rem' }}>
+                            <strong>💰 Total:</strong> R$ {order.total.toFixed(2)}
+                          </p>
+                          <p style={{ margin: '0.25rem 0', fontSize: '0.9rem' }}>
+                            <strong>💳 Forma de pagamento:</strong> {getPaymentMethodLabel(order.payment_method)}
+                          </p>
+                        </div>
+                      </div>
+
+                      <p style={{ margin: '0.5rem 0', fontSize: '0.9rem' }}>
+                        <strong>🚚 Entrega:</strong> {order.delivery_type === 'delivery' ? 'Entrega' : 'Retirada'}
+                      </p>
+
+                      <div style={{ marginTop: '1rem' }}>
+                        <p style={{ margin: '0.25rem 0', fontSize: '0.9rem', fontWeight: 'bold' }}>🛒 Itens:</p>
+                        <div style={{
+                          backgroundColor: '#f9fafb',
+                          padding: '0.75rem',
+                          borderRadius: '8px',
+                          border: '1px solid #e5e7eb'
+                        }}>
+                          {order.items.map((item, index) => (
+                            <div key={index} style={{ marginBottom: '0.25rem', fontSize: '0.85rem' }}>
+                              {item.quantity}x {item.product.name}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="order-actions" style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      paddingTop: '1rem',
+                      borderTop: '1px solid #e5e7eb'
+                    }}>
+                      <select
+                        value={order.status}
+                        onChange={(e) => updateStatus(order.id, e.target.value as OrderStatus)}
+                        style={{
+                          padding: '0.75rem 1.5rem',
+                          borderRadius: '8px',
+                          border: `2px solid ${getStatusColor(order.status)}`,
+                          backgroundColor: 'white',
+                          fontSize: '1rem',
+                          fontWeight: 'bold',
+                          color: getStatusColor(order.status),
+                          cursor: 'pointer',
+                          minWidth: '200px',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {statusOptions.map((status) => (
+                          <option key={status} value={status}>
+                            {getStatusIcon(status)} {status}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                  <div className="order-details">
-                    <p><strong>Cliente:</strong> {order.customer_name} • <strong>Telefone:</strong> {order.phone}</p>
-                    <p><strong>Total:</strong> R$ {order.total.toFixed(2)} • <strong>Pagamento:</strong> {order.payment_method}</p>
-                    <p><strong>Entraga:</strong> {order.delivery_type === 'delivery' ? 'Entrega' : 'Retirada'}</p>
-                    <p><strong>Itens:</strong> {order.items.map((item) => `${item.quantity}x ${item.product.name}`).join(', ')}</p>
-                  </div>
-                  <div className="order-actions" style={{ marginTop: '0.75rem' }}>
-                    <select
-                      value={order.status}
-                      onChange={(e) => updateStatus(order.id, e.target.value as OrderStatus)}
-                    >
-                      {statusOptions.map((status) => (
-                        <option key={status} value={status}>{status}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+                ))}
+              </div>
+            )}
+          </section>
+        </>
       )}
     </div>
   );
