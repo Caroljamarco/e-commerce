@@ -1,28 +1,41 @@
 import { forwardRef } from "react";
 import type { TextareaHTMLAttributes } from "react";
+import "../../../styles/components/Textarea.css";
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  error?: boolean;
+  size?: "sm" | "md" | "lg";
+  error?: string;
+  noResize?: boolean;
+  fullHeight?: boolean;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className = "", error, ...props }, ref) => {
-    const baseClasses = [
-      "flex min-h-[100px] w-full rounded-lg border border-input bg-background px-4 py-3",
-      "text-base ring-offset-background placeholder:text-muted-foreground",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      "disabled:cursor-not-allowed disabled:opacity-50",
-      "transition-colors duration-200",
-      error ? "border-destructive" : "",
+  ({ 
+    className = "", 
+    size = "md",
+    error,
+    noResize,
+    fullHeight,
+    ...props 
+  }, ref) => {
+    const classes = [
+      'textarea',
+      `textarea-${size}`,
+      error && 'textarea-error',
+      noResize && 'textarea-no-resize',
+      fullHeight && 'textarea-full-height',
       className
-    ].join(" ");
+    ].filter(Boolean).join(' ');
 
     return (
-      <textarea
-        className={baseClasses}
-        ref={ref}
-        {...props}
-      />
+      <div className="textarea-container">
+        <textarea
+          className={classes}
+          ref={ref}
+          {...props}
+        />
+        {error && <span className="error-message">{error}</span>}
+      </div>
     );
   }
 );
