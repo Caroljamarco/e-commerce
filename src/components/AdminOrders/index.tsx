@@ -31,6 +31,12 @@ const getStatusIcon = (status: OrderStatus) => {
   }
 };
 
+const formatDateBR = (date: string) => {
+  if (!date) return '';
+  const [year, month, day] = date.split('-');
+  return `${day}/${month}/${year}`;
+};
+
 const getPaymentMethodLabel = (method: string) => {
   switch (method) {
     case 'money':
@@ -125,10 +131,11 @@ export function AdminOrders() {
       ) : (
         <>
           <section className="order-section">
-            <h2 className="section-title">📦 Pedidos ({orders.length})</h2>
+            <h2 className="section-title">📦 Pedidos ({filteredOrders.length})</h2>
               {filterDate && (
                 <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#4b5563' }}>
-                  Mostrando pedidos de <strong>{filterDate}</strong> ({filteredOrders.length})
+                  Mostrando pedidos de <strong>{formatDateBR(filterDate)}</strong> ({filteredOrders.length})
+                  {` de ${orders.length} no total`}
                 </p>
               )}
             {orders.length === 0 ? (
