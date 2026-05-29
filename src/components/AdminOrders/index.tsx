@@ -142,7 +142,7 @@ export function AdminOrders() {
               <p>Nenhum pedido registrado.</p>
             ) : (
               <div className="orders-list" style={{ gap: '1.5rem' }}>
-                {filteredOrders.map((order) => (
+                {filteredOrders.map((order, index) => (
                   <div
                     key={order.id}
                     className="order-card"
@@ -165,7 +165,9 @@ export function AdminOrders() {
                     }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <span style={{ fontSize: '1.25rem' }}>📋</span>
-                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Pedido #{order.id}</span>
+                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
+                          Pedido #{filterDate ? index + 1 : order.id}
+                        </span>
                       </div>
                       <div style={{
                         display: 'flex',
